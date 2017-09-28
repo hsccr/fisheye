@@ -1,173 +1,173 @@
-// ƒEƒBƒ“ƒhƒEŠÖ˜A‚Ìˆ—
+ï»¿// ìœˆë„ìš° ê´€ë ¨ ì‘ì—…
 #include "Window.h"
 
-// •½–Ê“WŠJ‚Ìİ’èˆê——
+// í‰ë©´ ë°°í¬ ì„¤ì • ëª©ë¡
 #include "ExpansionShader.h"
 
-// OpenCV ‚É‚æ‚éƒrƒfƒIƒLƒƒƒvƒ`ƒƒ
+// OpenCV ì˜í•œ ë¹„ë””ì˜¤ ìº¡ì²˜
 #include "CamCv.h"
 
 //
-// İ’è
+// ì„¤ì •
 //
 
-// ”wŒi‰æ‘œ‚Ìæ“¾‚Ég—p‚·‚éƒfƒoƒCƒX
-//#define CAPTURE_INPUT 0               // 0 ”Ô‚ÌƒLƒƒƒvƒ`ƒƒƒfƒoƒCƒX‚©‚ç“ü—Í
-//#define CAPTURE_INPUT "sp360.mp4"     // Kodak SP360 4K ‚Ì Fish Eye ‰æ‘œ
-#define CAPTURE_INPUT "theta.mp4"     // THETA S ‚Ì Equirectangular ‰æ‘œ
+// ë°°ê²½ ì´ë¯¸ì§€ë¥¼ ê°€ì ¸ ì˜¤ëŠ” ë° ì‚¬ìš©í•˜ëŠ” ì¥ì¹˜
+// # define CAPTURE_INPUT 0 // 0 ë²ˆ ìº¡ì²˜ ì¥ì¹˜ì—ì„œ ì…ë ¥
+#define CAPTURE_INPUT "sp360.mp4"// Kodak SP360 4Kì˜ Fish Eye ì´ë¯¸ì§€
+// # define CAPTURE_INPUT "theta.mp4"// THETA Sì˜ Equirectangular ì´ë¯¸ì§€
 
-// ”wŒi‰æ‘œ‚ğ“WŠJ‚·‚éè–@ (ExpansionShader.h QÆ)
-//constexpr int shader_selection(6);    // Kodak SP360 4K
-//constexpr int shader_selection(7);    // THETA S ‚Ì Dual Fisheye ‰æ‘œ
-constexpr int shader_selection(2);    // THETA S ‚Ì Equirectangular ‰æ‘œ
+// ë°°ê²½ ì´ë¯¸ì§€ë¥¼ ë°°í¬í•˜ëŠ” ë°©ë²• (ExpansionShader.h ì°¸ì¡°)
+// constexpr int shader_selection (6); // Kodak SP360 4K
+// constexpr int shader_selection (7); // THETA Sì˜ Dual Fisheye ì´ë¯¸ì§€
+constexpr int shader_selection (5); // THETA Sì˜ Equirectangular ì´ë¯¸ì§€
 
-// ”wŒi‰æ‘œ‚Ì“WŠJ‚Ég—p‚·‚éƒo[ƒeƒbƒNƒXƒVƒF[ƒ_‚Ìƒ\[ƒXƒtƒ@ƒCƒ‹–¼
-const char *const capture_vsrc(shader_type[shader_selection].vsrc);
+// ë°°ê²½ ì´ë¯¸ì§€ ë°°í¬ì— ì‚¬ìš©ë˜ëŠ” ë²„í…ìŠ¤ ì‰ì´ë” ì†ŒìŠ¤ íŒŒì¼ ì´ë¦„
+const char * const capture_vsrc (shader_type [shader_selection] .vsrc);
 
-// ”wŒi‰æ‘œ‚Ì“WŠJ‚Ég—p‚·‚éƒtƒ‰ƒOƒƒ“ƒgƒVƒF[ƒ_‚Ìƒ\[ƒXƒtƒ@ƒCƒ‹–¼
-const char *const capture_fsrc(shader_type[shader_selection].fsrc);
+// ë°°ê²½ ì´ë¯¸ì§€ ë°°í¬ì— ì‚¬ìš©ë˜ëŠ” ì¡°ê° ì‰ì´ë” ì†ŒìŠ¤ íŒŒì¼ ì´ë¦„
+const char * const capture_fsrc (shader_type [shader_selection] .fsrc);
 
-// ”wŒi‰æ‘œ‚Ìæ“¾‚Ég—p‚·‚éƒJƒƒ‰‚Ì‰ğ‘œ“x (0 ‚È‚çƒJƒƒ‰‚©‚çæ“¾)
-const int capture_width(shader_type[shader_selection].width);
-const int capture_height(shader_type[shader_selection].height);
+// ë°°ê²½ ì´ë¯¸ì§€ë¥¼ ê°€ì ¸ ì˜¤ëŠ” ë° ì‚¬ìš©í•˜ëŠ” ì¹´ë©”ë¼ì˜ í•´ìƒë„ (0ì´ë¼ë©´ ì¹´ë©”ë¼ì—ì„œ ì·¨ë“)
+const int capture_width (shader_type [shader_selection] .width);
+const int capture_height (shader_type [shader_selection] .height);
 
-// ”wŒi‰æ‘œ‚Ìæ“¾‚Ég—p‚·‚éƒJƒƒ‰‚ÌƒtƒŒ[ƒ€ƒŒ[ƒg (0 ‚È‚çƒJƒƒ‰‚©‚çæ“¾)
-constexpr int capture_fps(0);
+// ë°°ê²½ ì´ë¯¸ì§€ë¥¼ ê°€ì ¸ ì˜¤ëŠ” ë° ì‚¬ìš©í•˜ëŠ” ì¹´ë©”ë¼ì˜ í”„ë ˆì„ ì†ë„ (0ì´ë¼ë©´ ì¹´ë©”ë¼ì—ì„œ ì·¨ë“)
+constexpr int capture_fps (0);
 
-// ”wŒi‰æ‘œ‚ÌŠÖS—Ìˆæ
-const float *const capture_circle(shader_type[shader_selection].circle);
+// ë°°ê²½ ì´ë¯¸ì§€ì˜ ê´€ì‹¬ ì˜ì—­
+const float * const capture_circle (shader_type [shader_selection] .circle);
 
-// ”wŒi‰æ‘œ‚Ì•`‰æ‚É—p‚¢‚éƒƒbƒVƒ…‚ÌŠiq“_”
-constexpr int screen_samples(1271);
+// ë°°ê²½ ì´ë¯¸ì§€ë¥¼ ê·¸ë¦´ ë•Œ ì‚¬ìš©í•˜ëŠ” ë©”ì‰¬ ê²©ì ì ìˆ˜
+constexpr int screen_samples (1271);
 
-// ”wŒiF‚Í•\¦‚³‚ê‚È‚¢‚ª‡¬‚É 0 ‚É‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚é
-constexpr GLfloat background[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+// ë°°ê²½ìƒ‰ì€ í‘œì‹œë˜ì§€ ì•Šì§€ë§Œ í•©ì„±ì‹œì— 0ìœ¼ë¡œ í•´ ë‘˜ í•„ìš”ê°€ìˆë‹¤
+constexpr GLfloat background [] = {0.0f, 0.0f, 0.0f, 0.0f};
 
 //
-// ƒƒCƒ“
+// ë©”ì¸
 //
 
-int main()
+int main ()
 {
-  // ƒJƒƒ‰‚Ìg—p‚ğŠJn‚·‚é
+  // ì¹´ë©”ë¼ ì‚¬ìš©í•˜ê¸°
   CamCv camera;
-  if (!camera.open(CAPTURE_INPUT, capture_width, capture_height, capture_fps))
+  if (! camera.open (CAPTURE_INPUT, capture_width, capture_height, capture_fps))
   {
-    std::cerr << "Can't open capture device.\n";
+    std :: cerr << "Can not open capture device \n";
     return EXIT_FAILURE;
   }
-  camera.start();
+  camera.start ();
 
-  // ƒEƒBƒ“ƒhƒE‚ğì¬‚·‚é
+  // ì°½ì„ ë§Œë“¤
   Window window;
 
-  // ƒEƒBƒ“ƒhƒE‚ªŠJ‚¯‚½‚©‚Ç‚¤‚©Šm‚©‚ß‚é
-  if (!window.get())
+  // ì°½ì„ ì—´ì—ˆë‹¤ ì—¬ë¶€ í™•ì¸
+  if (! window.get ())
   {
-    // ƒEƒBƒ“ƒhƒE‚ªŠJ‚¯‚È‚©‚Á‚½
-    std::cerr << "Can't open GLFW window.\n";
+    // ì°½ì„ ì—´ì§€ ì•Šì•˜ë‹¤
+    std :: cerr << "Can not open GLFW window \n";
     return EXIT_FAILURE;
   }
 
-  // ”wŒi•`‰æ—p‚ÌƒVƒF[ƒ_ƒvƒƒOƒ‰ƒ€‚ğ“Ç‚İ‚Ş
-  const GLuint expansion(ggLoadShader(capture_vsrc, capture_fsrc));
-  if (!expansion)
+  // ë°°ê²½ ê·¸ë¦¬ê¸°ìœ„í•œ ì‰ì´ë” í”„ë¡œê·¸ë¨ì„ë¡œë“œ
+  const GLuint expansion (ggLoadShader (capture_vsrc, capture_fsrc));
+  if (! expansion)
   {
-    // ƒVƒF[ƒ_‚ª“Ç‚İ‚ß‚È‚©‚Á‚½
-    std::cerr << "Can't create program object.\n";
+    // ì‰ì´ë”ê°€ ì ì¬ë˜ì§€
+    std :: cerr << "Can not create program object \n";
     return EXIT_FAILURE;
   }
 
-  // uniform •Ï”‚ÌêŠ‚ğw’è‚·‚é
-  const GLuint gapLoc(glGetUniformLocation(expansion, "gap"));
-  const GLuint screenLoc(glGetUniformLocation(expansion, "screen"));
-  const GLuint focalLoc(glGetUniformLocation(expansion, "focal"));
-  const GLuint rotationLoc(glGetUniformLocation(expansion, "rotation"));
-  const GLuint circleLoc(glGetUniformLocation(expansion, "circle"));
-  const GLuint imageLoc(glGetUniformLocation(expansion, "image"));
+  // uniform ë³€ìˆ˜ì˜ ìœ„ì¹˜ë¥¼ â€‹â€‹ì§€ì •í•˜ëŠ”
+  const GLuint gapLoc (glGetUniformLocation (expansion, "gap"));
+  const GLuint screenLoc (glGetUniformLocation (expansion, "screen"));
+  const GLuint focalLoc (glGetUniformLocation (expansion, "focal"));
+  const GLuint rotationLoc (glGetUniformLocation (expansion, "rotation"));
+  const GLuint circleLoc (glGetUniformLocation (expansion, "circle"));
+  const GLuint imageLoc (glGetUniformLocation (expansion, "image"));
 
-  // ”wŒi—p‚ÌƒeƒNƒXƒ`ƒƒ‚ğì¬‚·‚é
-  //   ƒ|ƒŠƒSƒ“‚Åƒrƒ…[ƒ|[ƒg‘S‘Ì‚ğ–„‚ß‚é‚Ì‚Å”wŒi‚Í•\¦‚³‚ê‚È‚¢B
-  //   GL_CLAMP_TO_BORDER ‚É‚µ‚Ä‚¨‚¯‚ÎƒeƒNƒXƒ`ƒƒ‚ÌŠO‚ª GL_TEXTURE_BORDER_COLOR ‚É‚È‚é‚Ì‚ÅA‚±‚ê‚ª”wŒiF‚É‚È‚éB
-  const GLuint image([]() { GLuint image; glGenTextures(1, &image); return image; } ());
-  glBindTexture(GL_TEXTURE_2D, image);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, camera.getWidth(), camera.getHeight(), 0, GL_BGR, GL_UNSIGNED_BYTE, NULL);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, background);
+  // ë°°ê²½ì˜ ì§ˆê°ì„ ë§Œë“œëŠ”
+  // í´ë¦¬ê³¤ìœ¼ë¡œ ë·°í¬íŠ¸ ì „ì²´ë¥¼ ì±„ìš°ê¸° ë•Œë¬¸ì— ë°°ê²½ì€ í‘œì‹œë˜ì§€ ì•ŠëŠ”ë‹¤.
+  // GL_CLAMP_TO_BORDERì—ë‘ë©´ ì§ˆê°ì˜ ì™¸ë¶€ê°€ GL_TEXTURE_BORDER_COLORë˜ê¸° ë•Œë¬¸ì—, ì´ê²ƒì´ ë°°ê²½ìƒ‰ëœë‹¤.
+  const GLuint image ([] () {GLuint image; glGenTextures (1, & image); return image;} ());
+  glBindTexture (GL_TEXTURE_2D, image);
+  glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, camera.getWidth (), camera.getHeight (), 0, GL_BGR, GL_UNSIGNED_BYTE, NULL);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameterfv (GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, background);
 
-  // ”wŒi•`‰æ‚Ì‚½‚ß‚ÌƒƒbƒVƒ…‚ğì¬‚·‚é
-  //   ’¸“_À•W’l‚ğ vertex shader ‚Å¶¬‚·‚é‚Ì‚Å VBO ‚Í•K—v‚È‚¢
+  // ë°°ê²½ ê·¸ë¦¬ê¸°ìœ„í•œ ë©”ì‰¬ë¥¼ ë§Œë“¤
+  // ì •ì  ì¢Œí‘œ ê°’ì„ vertex shaderì—ì„œ ìƒì„±í•˜ê¸° ë•Œë¬¸ì— VBOëŠ” í•„ìš” ì—†ë‹¤
   const GLuint mesh([]() { GLuint mesh; glGenVertexArrays(1, &mesh); return mesh; } ());
 
-  // ‰B–ÊÁ‹‚ğİ’è‚·‚é
-  glDisable(GL_DEPTH_TEST);
-  glDisable(GL_CULL_FACE);
+  // ì€ë©´ ì†Œê±°ë¥¼ ì„¤ì •
+  glDisable (GL_DEPTH_TEST);
+  glDisable (GL_CULL_FACE);
 
-  // ƒEƒBƒ“ƒhƒE‚ªŠJ‚¢‚Ä‚¢‚éŠÔŒJ‚è•Ô‚·
-  while (!window.shouldClose())
+  // ìœˆë„ìš°ê°€ ì—´ë ¤ìˆëŠ” ë™ì•ˆ ë°˜ë³µ
+  while (! window.shouldClose ())
   {
-    // ”wŒi‰æ‘œ‚Ì“WŠJ‚É—p‚¢‚éƒVƒF[ƒ_ƒvƒƒOƒ‰ƒ€‚Ìg—p‚ğŠJn‚·‚é
-    glUseProgram(expansion);
+    // ë°°ê²½ ì´ë¯¸ì§€ ë°°í¬ì— ì‚¬ìš© ì…°ì´ë” í”„ë¡œê·¸ë¨ ì‚¬ìš©í•˜ê¸°
+    glUseProgram (expansion);
 
-    // ƒXƒNƒŠ[ƒ“‚Ì‹éŒ`‚ÌŠiq“_”
-    //   •W–{“_‚Ì” (’¸“_”) n = x * y ‚Æ‚·‚é‚Æ‚«A‚±‚ê‚ÉƒAƒXƒyƒNƒg”ä a = x / y ‚ğ‚©‚¯‚ê‚ÎA
-    //   a * n = x * x ‚Æ‚È‚é‚©‚ç x = sqrt(a * n), y = n / x; ‚Å‹‚ß‚ç‚ê‚éB
-    //   ‚±‚Ì•û–@‚Í’¸“_‘®«‚ğ‚Á‚Ä‚¢‚È‚¢‚Ì‚ÅÀs’†‚É•W–{“_‚Ì”‚âƒAƒXƒyƒNƒg”ä‚Ì•ÏX‚ª—eˆÕB
-    const GLsizei slices(static_cast<GLsizei>(sqrt(window.getAspect() * screen_samples)));
-    const GLsizei stacks(screen_samples / slices - 1); // •`‰æ‚·‚éƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”‚È‚Ì‚Åæ‚É 1 ‚ğˆø‚¢‚Ä‚¨‚­B
+    // í™”ë©´ì˜ ì‚¬ê°í˜• ê²©ì ì ìˆ˜
+    // í‘œë³¸ ì  ìˆ˜ (ì •ì ) n = x * yë¥¼ í•  ë•Œ, ì´ì— ë¹„ìœ¨ a = x / yë¥¼ ê±¸ë©´
+    // a * n = x * xê°€ë˜ê¸° ë•Œë¬¸ x = sqrt (a * n) y = n / x; êµ¬í•  ìˆ˜ìˆë‹¤.
+    //ì´ ë°©ë²•ì€ ì •ì  ì†ì„±ì„ ê°€ì§€ê³  ìˆì§€ ì•Šê¸° ë•Œë¬¸ì— ì‹¤í–‰ ì¤‘ì— í‘œë³¸ ì ì˜ ìˆ˜ì™€ ë¹„ìœ¨ì˜ ë³€ê²½ì´ ìš©ì´í•˜ë‹¤.
+    const GLsizei slices (static_cast <GLsizei> (sqrt (window.getAspect () * screen_samples)));
+    const GLsizei stacks (screen_samples / slices - 1); // ê·¸ë¦¬ê¸° ì¸ìŠ¤í„´ìŠ¤ì˜ ìˆ˜ì´ë¯€ë¡œ ë¨¼ì € 1ì„ ëº€ ë‘”ë‹¤.
 
-    // ƒXƒNƒŠ[ƒ“‚ÌŠiqŠÔŠu
-    //   ƒNƒŠƒbƒsƒ“ƒO‹óŠÔ‘S‘Ì‚ğ–„‚ß‚élŠpŒ`‚Í [-1, 1] ‚Ì”ÍˆÍ‚·‚È‚í‚¿c‰¡ 2 ‚Ì‘å‚«‚³‚¾‚©‚çA
-    //   ‚»‚ê‚ğc‰¡‚Ì (Šiq” - 1) ‚ÅŠ„‚Á‚ÄŠiq‚ÌŠÔŠu‚ğ‹‚ß‚éB
-    glUniform2f(gapLoc, 2.0f / (slices - 1), 2.0f / stacks);
+    // ìŠ¤í¬ë¦°ì˜ ê²©ì ê°„ê²©
+    // í´ë¦¬í•‘ ê³µê°„ ì „ì²´ë¥¼ ì±„ìš¸ ì‚¬ê°í˜•ì€ [-1, 1]ì˜ ë²”ìœ„ ì¦‰ ê°€ë¡œ ì„¸ë¡œ 2ì˜ í¬ê¸°ì´ê¸° ë•Œë¬¸ì—,
+    // ê·¸ê²ƒì„ ê°€ë¡œ ì„¸ë¡œ (ê²©ì ìˆ˜ - 1)ë¡œ ë‚˜ëˆ„ì–´ ê²©ì ê°„ê²©ì„ êµ¬í•œë‹¤.
+    glUniform2f (gapLoc, 2.0f / (slices - 1), 2.0f / stacks);
 
-    // ƒXƒNƒŠ[ƒ“‚ÌƒTƒCƒY‚Æ’†SˆÊ’u
-    //   screen[0] = (right - left) / 2
-    //   screen[1] = (top - bottom) / 2
-    //   screen[2] = (right + left) / 2
-    //   screen[3] = (top + bottom) / 2
-    const GLfloat screen[] = { window.getAspect(), 1.0f, 0.0f, 0.0f };
-    glUniform4fv(screenLoc, 1, screen);
+    // í™”ë©´ í¬ê¸°ì™€ ì¤‘ì‹¬ ìœ„ì¹˜
+    // screen [0] = (right - left) / 2
+    // screen [1] = (top - bottom) / 2
+    // screen [2] = (right + left) / 2
+    // screen [3] = (top + bottom) / 2
+    const GLfloat screen [] = {window.getAspect (), 1.0f, 0.0f, 0.0f};
+    glUniform4fv (screenLoc, 1, screen);
 
-    // ƒXƒNƒŠ[ƒ“‚Ü‚Å‚ÌÅ“_‹——£
-    //   window.getWheel() ‚Í [-100, 49] ‚Ì”ÍˆÍ‚ğ•Ô‚·B
-    //   ‚µ‚½‚ª‚Á‚ÄÅ“_‹——£ focal ‚Í [1 / 3, 1] ‚Ì”ÍˆÍ‚É‚È‚éB
-    //   ‚±‚ê‚ÍÅ“_‹——£‚ª’·‚­‚È‚é‚É‚µ‚½‚ª‚Á‚Ä•Ï‰»‚ª‘å‚«‚­‚È‚éB
-    glUniform1f(focalLoc, -50.0f / (window.getWheel() - 50.0f));
+    // ìŠ¤í¬ë¦°ê¹Œì§€ì˜ ì´ˆì  ê±°ë¦¬
+    // window.getWheel ()ëŠ” [-100, 49]ì˜ ë²”ìœ„ë¥¼ ëŒë ¤ ì¤€ë‹¤.
+    // ë”°ë¼ì„œ ì´ˆì  ê±°ë¦¬ focalëŠ” [1 / 3, 1]ì˜ ë²”ìœ„ê°€ëœë‹¤.
+    // ì´ê²ƒì€ ì´ˆì  ê±°ë¦¬ê°€ ê¸¸ì–´ì§ì— ë”°ë¼ ë³€í™”ê°€ ì»¤ì§„ë‹¤.
+    glUniform1f (focalLoc, -50.0f / (window.getWheel () - 50.0f));
 
-    // ”wŒi‚É‘Î‚·‚é‹ü‚Ì‰ñ“]s—ñ
-    glUniformMatrix4fv(rotationLoc, 1, GL_TRUE, window.getLeftTrackball().get());
+    // ë°°ê²½ì— ëŒ€í•œ ì‹œì„ ì˜ íšŒì „ í–‰ë ¬
+    glUniformMatrix4fv (rotationLoc, 1, GL_TRUE, window.getLeftTrackball (). get ());
 
-    // ƒeƒNƒXƒ`ƒƒ‚Ì”¼Œa‚Æ’†SˆÊ’u
-    //   circle[0] = ƒCƒ[ƒWƒT[ƒNƒ‹‚Ì x •ûŒü‚Ì”¼Œa
-    //   circle[1] = ƒCƒ[ƒWƒT[ƒNƒ‹‚Ì y •ûŒü‚Ì”¼Œa
-    //   circle[2] = ƒCƒ[ƒWƒT[ƒNƒ‹‚Ì’†S‚Ì x À•W
-    //   circle[3] = ƒCƒ[ƒWƒT[ƒNƒ‹‚Ì’†S‚Ì y À•W
-    const GLfloat circle[] =
+    // í…ìŠ¤ì²˜ì˜ ë°˜ì§€ë¦„ê³¼ ì¤‘ì‹¬ ìœ„ì¹˜
+    // circle [0] = ì´ë¯¸ì§€ ì¨í´ì˜ x ë°©í–¥ì˜ ë°˜ê²½
+    // circle [1] = ì´ë¯¸ì§€ ì¨í´ì˜ y ë°©í–¥ì˜ ë°˜ê²½
+    // circle [2] = ì´ë¯¸ì§€ ì„œí´ì˜ ì¤‘ì‹¬ì˜ x ì¢Œí‘œ
+    // circle [3] = ì´ë¯¸ì§€ ì„œí´ì˜ ì¤‘ì‹¬ì˜ y ì¢Œí‘œ
+    const GLfloat circle [] =
     {
-      capture_circle[0] + window.getShiftWheel() * 0.001f,
-      capture_circle[1] + window.getShiftWheel() * 0.001f,
-      capture_circle[2] + (window.getShiftArrowX() - window.getControlArrowX()) * 0.001f,
-      capture_circle[3] + (window.getShiftArrowY() + window.getControlArrowY()) * 0.001f
+        capture_circle [0] + window.getShiftWheel () * 0.001f,
+        capture_circle [1] + window.getShiftWheel () * 0.001f,
+        capture_circle [2] + (window.getShiftArrowX () - window.getControlArrowX ()) * 0.001f,
+        capture_circle [3] + (window.getShiftArrowY () + window.getControlArrowY ()) * 0.001f
     };
-    glUniform4fv(circleLoc, 1, circle);
+    glUniform4fv (circleLoc, 1, circle);
 
-    // ƒLƒƒƒvƒ`ƒƒ‚µ‚½‰æ‘œ‚ğ”wŒi—p‚ÌƒeƒNƒXƒ`ƒƒ‚É“]‘—‚·‚é
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, image);
-    camera.transmit();
+    // ìº¡ì²˜ í•œ ì´ë¯¸ì§€ë¥¼ ë°°ê²½ì˜ í…ìŠ¤ì²˜ë¡œ ì „ì†¡
+    glActiveTexture (GL_TEXTURE0);
+    glBindTexture (GL_TEXTURE_2D, image);
+    camera.transmit ();
 
-    // ƒeƒNƒXƒ`ƒƒƒ†ƒjƒbƒg‚ğw’è‚·‚é
-    glUniform1i(imageLoc, 0);
+    // í…ìŠ¤ì²˜ ìœ ë‹›ì„ ì§€ì •
+    glUniform1i (imageLoc, 0);
 
-    // ƒƒbƒVƒ…‚ğ•`‰æ‚·‚é
-    glBindVertexArray(mesh);
-    glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, slices * 2, stacks);
+    // ë©”ì‰¬ ê·¸ë¦´
+    glBindVertexArray (mesh);
+    glDrawArraysInstanced (GL_TRIANGLE_STRIP, 0, slices * 2, stacks);
 
-    // ƒJƒ‰[ƒoƒbƒtƒ@‚ğ“ü‚ê‘Ö‚¦‚ÄƒCƒxƒ“ƒg‚ğæ‚èo‚·
-    window.swapBuffers();
-  }
+    // ì»¬ëŸ¬ ë²„í¼ë¥¼ êµì²´í•˜ì—¬ ì´ë²¤íŠ¸ë¥¼ ê²€ìƒ‰
+    window.swapBuffers ();
+   }
 }

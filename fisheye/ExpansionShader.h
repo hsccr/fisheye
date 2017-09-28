@@ -1,52 +1,52 @@
 #pragma once
 
 //
-// •½–Ê“WŠJ‚Ég‚¤ƒVƒF[ƒ_
+// í‰ë©´ ì „ê°œì— ì‚¬ìš© ì‰ì´ë”
 //
 
-// ƒVƒF[ƒ_‚ÌƒZƒbƒg‚Æƒpƒ‰ƒ[ƒ^
+// ì‰ì´ë” ì„¸íŠ¸ ë° ë§¤ê°œ ë³€ìˆ˜
 struct ExpansionShader
 {
-  // ƒo[ƒeƒbƒNƒXƒVƒF[ƒ_‚Ìƒ\[ƒXƒvƒƒOƒ‰ƒ€‚Ìƒtƒ@ƒCƒ‹–¼
-  const char *vsrc;
+  // ë²„í…ìŠ¤ ì‰ì´ë” ì†ŒìŠ¤ í”„ë¡œê·¸ë¨ì˜ íŒŒì¼ ì´ë¦„
+  const char * vsrc;
 
-  // ƒtƒ‰ƒOƒƒ“ƒgƒVƒF[ƒ_‚Ìƒ\[ƒXƒvƒƒOƒ‰ƒ€‚Ìƒtƒ@ƒCƒ‹–¼
-  const char *fsrc;
+  // ì¡°ê° ì‰ì´ë” ì†ŒìŠ¤ í”„ë¡œê·¸ë¨ì˜ íŒŒì¼ ì´ë¦„
+  const char * fsrc;
 
-  // ƒJƒƒ‰‚Ì‰ğ‘œ“x
+  // ì¹´ë©”ë¼ì˜ í•´ìƒë„
   const int width, height;
 
-  // ƒCƒ[ƒWƒT[ƒNƒ‹‚Ì”¼Œa‚Æ’†SˆÊ’u
-  const float circle[4];
+  // ì´ë¯¸ì§€ ì„œí´ì˜ ë°˜ì§€ë¦„ê³¼ ì¤‘ì‹¬ ìœ„ì¹˜
+  const float circle [4];
 };
 
-// ƒVƒF[ƒ_‚Ìí—Ş
-constexpr ExpansionShader shader_type[] =
+// ì‰ì´ë”ì˜ ì¢…ë¥˜
+constexpr ExpansionShader shader_type [] =
 {
-  // 0: ’Êí‚ÌƒJƒƒ‰
-  { "fixed.vert",     "normal.frag",    640,  480, 1.0f, 1.0f, 0.0f, 0.0f },
+  // 0 : ì¼ë°˜ ì¹´ë©”ë¼
+  { "fixed.vert", "normal.frag", 640, 480, 1.0f, 1.0f, 0.0f, 0.0f},
 
-  // 1: ’Êí‚ÌƒJƒƒ‰‚Å‹“_‚ğ‰ñ“]
-  { "rectangle.vert", "normal.frag",    640,  480, 1.0f, 1.0f, 0.0f, 0.0f },
+  // 1 : ì¼ë°˜ ì¹´ë©”ë¼ ì‹œì ì„ íšŒì „
+  { "rectangle.vert", "normal.frag", 640, 480, 1.0f, 1.0f, 0.0f, 0.0f},
 
-  // 2: ³‹—‰~“›}–@‚Ì‰æ‘œ (cü‚ğÁ‚·‚É‚Í GL_CLAMP_TO_BORDER ‚ğ GL_REPEAT ‚É‚µ‚Ä‚­‚¾‚³‚¢)
-  { "panorama.vert",  "panorama.frag", 1280,  720, 1.0f, 1.0f, 0.0f, 0.0f },
+  // 2 : ë“±ì¥ ë°©í˜• ë„ë²•ì˜ ì´ë¯¸ì§€ (ì„¸ë¡œ ì„ ì„ ì§€ìš°ë ¤ë©´ GL_CLAMP_TO_BORDERì„ GL_REPEATí•©ë‹ˆë‹¤)
+  { "panorama.vert", "panorama.frag", 1280, 720, 1.0f, 1.0f, 0.0f, 0.0f},
 
-  // 3: 180‹‹›ŠáƒJƒƒ‰ : 3.1415927 / 2 (à 180‹/ 2)
-  { "fisheye.vert",   "normal.frag",   1280,  720, 1.570796327f, 1.570796327f, 0.0f, 0.0f },
+  // 3 : 180 Â° ì–´ì•ˆ ì¹´ë©”ë¼ : 3.1415927 / 2 (â‰’ 180 Â° / 2)
+  { "fisheye.vert", "normal.frag", 1280, 720, 1.570796327f, 1.570796327f, 0.0f, 0.0f},
 
-  // 4: 180‹‹›ŠáƒJƒƒ‰ (FUJINON FE185C046HA-1 + SENTECH STC-MCE132U3V) : 3.5779249 / 2 (à 205‹/ 2)
-  { "fisheye.vert",   "normal.frag",   1280, 1024, 1.797689129f, 1.797689129f, 0.0f, 0.0f },
+  // 4 : 180 Â° ì–´ì•ˆ ì¹´ë©”ë¼ (FUJINON FE185C046HA-1 + SENTECH STC-MCE132U3V) : 3.5779249 / 2 (â‰’ 205 Â° / 2)
+  { "fisheye.vert", "normal.frag", 1280, 1024, 1.797689129f, 1.797689129f, 0.0f, 0.0f},
 
-  // 5: 206‹‹›ŠáƒJƒƒ‰ (Kodak PIXPRO SP360 4K, èU‚ê•â³‚ ‚è) : 3.5953783 / 2 (à 206‹/ 2)
-  { "fisheye.vert",   "normal.frag",   1440, 1440, 1.797689129f, 1.797689129f, 0.0f, 0.0f },
+  // 5 : 206 Â° ì–´ì•ˆ ì¹´ë©”ë¼ (Kodak PIXPRO SP360 4K ì†ë–¨ë¦¼ ë³´ì • ìˆìŒ) : 3.5953783 / 2 (â‰’ 206 Â° / 2)
+  { "fisheye.vert", "normal.frag", 1440, 1440, 1.797689129f, 1.797689129f, 0.0f, 0.0f},
 
-  // 6: 235‹‹›ŠáƒJƒƒ‰ (Kodak PIXPRO SP360 4K, èU‚ê•â³‚È‚µ) : 4.1015237 / 2 (à 235‹/ 2)
-  { "fisheye.vert",   "normal.frag",   1440, 1440, 2.050761871f, 2.050761871f, 0.0f, 0.0f },
+  // 6 : 235 Â° ì–´ì•ˆ ì¹´ë©”ë¼ (Kodak PIXPRO SP360 4K ì†ë–¨ë¦¼ ë³´ì • ì—†ìŒ) : 4.1015237 / 2 (â‰’ 235 Â° / 2)
+  { "fisheye.vert", "normal.frag", 1440, 1440, 2.050761871f, 2.050761871f, 0.0f, 0.0f},
 
-  // 7: RICHO THETA ‚Ì USB ƒ‰ƒCƒuƒXƒgƒŠ[ƒ~ƒ“ƒO‰f‘œ : (è“®’²®‚ÅŒˆ‚ß‚½’l)
-  { "theta.vert",     "theta.frag",    1280,  720, 1.003f, 1.003f, 0.0f, -0.002f },
+  // 7 : RICHO THETAì˜ USB ë¼ì´ë¸Œ ìŠ¤íŠ¸ë¦¬ë° ì˜ìƒ : (ìˆ˜ë™ ì¡°ì •ì—ì„œ ê²°ì •í•œ ê°’)
+  { "theta.vert", "theta.frag", 1280, 720, 1.003f, 1.003f, 0.0f, -0.002f},
 
-  // 8: RICHO THETA ‚Ì HDMI ƒ‰ƒCƒuƒXƒgƒŠ[ƒ~ƒ“ƒO‰f‘œ : (è“®’²®‚ÅŒˆ‚ß‚½’l)
-  { "theta.vert",     "theta.frag",    1920,  1080, 1.003f, 1.003f, 0.0f, -0.002f }
+  // 8 : RICHO THETAì˜ HDMI ë¼ì´ë¸Œ ìŠ¤íŠ¸ë¦¬ë° ì˜ìƒ : (ìˆ˜ë™ ì¡°ì •ì—ì„œ ê²°ì •í•œ ê°’)
+  { "theta.vert", "theta.frag", 1920, 1080, 1.003f, 1.003f, 0.0f, -0.002f}
 };

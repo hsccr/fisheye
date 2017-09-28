@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-** ƒQ[ƒ€ƒOƒ‰ƒtƒBƒbƒNƒX“Á˜_—p•â•ƒvƒƒOƒ‰ƒ€ GLFW3 ”Å
+** ã‚²ãƒ¼ãƒ ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ç‰¹è«–ç”¨è£œåŠ©ãƒ—ãƒ­ã‚°ãƒ©ãƒ  GLFW3 ç‰ˆ
 **
 
 Copyright (c) 2011-2017 Kohe Tokoi. All Rights Reserved.
@@ -25,11 +25,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **
 */
 
-// •â•ƒvƒƒOƒ‰ƒ€
+// è£œåŠ©ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 #include "gg.h"
 using namespace gg;
 
-// Oculus Rift SDK ƒ‰ƒCƒuƒ‰ƒŠ (LibOVR) ‚Ì‘g‚İ‚İ
+// Oculus Rift SDK ãƒ©ã‚¤ãƒ–ãƒ©ãƒª (LibOVR) ã®çµ„ã¿è¾¼ã¿
 #if defined(USE_OCULUS_RIFT)
 #  if defined(_WIN32)
 #    define GLFW_EXPOSE_NATIVE_WIN32
@@ -45,10 +45,10 @@ using namespace gg;
 #  include <OVR_CAPI_GL.h>
 #  include <Extras/OVR_Math.h>
 #  if OVR_PRODUCT_VERSION > 0
-#    include <dxgi.h> // GetDefaultAdapterLuid ‚Ì‚½‚ß
+#    include <dxgi.h> // GetDefaultAdapterLuid ã®ãŸã‚
 #    pragma comment(lib, "dxgi.lib")
 
-// ƒfƒtƒHƒ‹ƒg‚ÌƒOƒ‰ƒtƒBƒbƒNƒXƒAƒ_ƒvƒ^‚Ì LUID ‚ğ“¾‚é
+// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚¢ãƒ€ãƒ—ã‚¿ã® LUID ã‚’å¾—ã‚‹
 inline ovrGraphicsLuid GetDefaultAdapterLuid()
 {
   ovrGraphicsLuid luid = ovrGraphicsLuid();
@@ -76,7 +76,7 @@ inline ovrGraphicsLuid GetDefaultAdapterLuid()
   return luid;
 }
 
-// LUID ‚ğ”äŠr‚·‚é
+// LUID ã‚’æ¯”è¼ƒã™ã‚‹
 inline int Compare(const ovrGraphicsLuid& lhs, const ovrGraphicsLuid& rhs)
 {
   return memcmp(&lhs, &rhs, sizeof (ovrGraphicsLuid));
@@ -85,55 +85,55 @@ inline int Compare(const ovrGraphicsLuid& lhs, const ovrGraphicsLuid& rhs)
 #  endif
 #endif
 
-// •W€ƒ‰ƒCƒuƒ‰ƒŠ
+// æ¨™æº–ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 #include <cstdlib>
 #include <iostream>
 
 //
-// ƒEƒBƒ“ƒhƒEŠÖ˜A‚Ìˆ—
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é–¢é€£ã®å‡¦ç†
 //
 class Window
 {
-  // ƒEƒBƒ“ƒhƒE‚Ì¯•Êq
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è­˜åˆ¥å­
   GLFWwindow *window;
 
-  // ƒrƒ…[ƒ|[ƒg‚Ì•‚Æ‚‚³
+  // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®å¹…ã¨é«˜ã•
   GLsizei width, height;
 
-  // ƒrƒ…[ƒ|[ƒg‚ÌƒAƒXƒyƒNƒg”ä
+  // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”
   GLfloat aspect;
 
-  // ƒVƒtƒgƒL[
+  // ã‚·ãƒ•ãƒˆã‚­ãƒ¼
   bool shift_key;
 
-  // ƒRƒ“ƒgƒ[ƒ‹ƒL[
+  // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚­ãƒ¼
   bool control_key;
 
-  // –îˆóƒL[
+  // çŸ¢å°ã‚­ãƒ¼
   int arrow[2];
 
-  // ƒVƒtƒgƒL[‚ğ‰Ÿ‚µ‚È‚ª‚ç–îˆóƒL[
+  // ã‚·ãƒ•ãƒˆã‚­ãƒ¼ã‚’æŠ¼ã—ãªãŒã‚‰çŸ¢å°ã‚­ãƒ¼
   int shift_arrow[2];
 
-  // ƒRƒ“ƒgƒ[ƒ‹ƒL[‚ğ‰Ÿ‚µ‚È‚ª‚ç–îˆóƒL[
+  // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚­ãƒ¼ã‚’æŠ¼ã—ãªãŒã‚‰çŸ¢å°ã‚­ãƒ¼
   int control_arrow[2];
 
-  // ƒ}ƒEƒX‚ÌŒ»İˆÊ’u
+  // ãƒã‚¦ã‚¹ã®ç¾åœ¨ä½ç½®
   double mouse_x, mouse_y;
 
-  // ƒ}ƒEƒXƒzƒC[ƒ‹‚Ì‰ñ“]—Ê
+  // ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡
   double wheel_rotation;
 
-  // ƒVƒtƒg‚ğ‰Ÿ‚µ‚È‚ª‚çƒ}ƒEƒXƒzƒC[ƒ‹‚Ì‰ñ“]—Ê
+  // ã‚·ãƒ•ãƒˆã‚’æŠ¼ã—ãªãŒã‚‰ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡
   double shift_wheel_rotation;
 
-  // ƒRƒ“ƒgƒ[ƒ‹‚ğ‰Ÿ‚µ‚È‚ª‚çƒ}ƒEƒXƒzƒC[ƒ‹‚Ì‰ñ“]—Ê
+  // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚’æŠ¼ã—ãªãŒã‚‰ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡
   double control_wheel_rotation;
 
-  // ¶ƒhƒ‰ƒbƒO‚É‚æ‚éƒgƒ‰ƒbƒNƒ{[ƒ‹
+  // å·¦ãƒ‰ãƒ©ãƒƒã‚°ã«ã‚ˆã‚‹ãƒˆãƒ©ãƒƒã‚¯ãƒœãƒ¼ãƒ«
   GgTrackball trackball_left;
 
-  // ‰Eƒhƒ‰ƒbƒO‚É‚æ‚éƒgƒ‰ƒbƒNƒ{[ƒ‹
+  // å³ãƒ‰ãƒ©ãƒƒã‚°ã«ã‚ˆã‚‹ãƒˆãƒ©ãƒƒã‚¯ãƒœãƒ¼ãƒ«
   GgTrackball trackball_right;
 
 #if defined(USE_OCULUS_RIFT)
@@ -141,93 +141,93 @@ class Window
   // Oculus Rift
   //
 
-  // Oculus Rift ‚ÌƒZƒbƒVƒ‡ƒ“
+  // Oculus Rift ã®ã‚»ãƒƒã‚·ãƒ§ãƒ³
   ovrSession session;
 
-  // Oculus Rift ‚Ìó‘Ô
+  // Oculus Rift ã®çŠ¶æ…‹
   ovrHmdDesc hmdDesc;
 
-  // Oculus Rift ‚ÌƒXƒNƒŠ[ƒ“‚ÌƒTƒCƒY
+  // Oculus Rift ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®ã‚µã‚¤ã‚º
   GLfloat screen[ovrEye_Count][4];
 
-  // Oculus Rift •\¦—p‚Ì FBO
+  // Oculus Rift è¡¨ç¤ºç”¨ã® FBO
   GLuint oculusFbo[ovrEye_Count];
 
-  // ƒ~ƒ‰[•\¦—p‚Ì FBO
+  // ãƒŸãƒ©ãƒ¼è¡¨ç¤ºç”¨ã® FBO
   GLuint mirrorFbo;
 
 #  if OVR_PRODUCT_VERSION > 0
-  // Oculus Rift ‚É‘—‚é•`‰æƒf[ƒ^
+  // Oculus Rift ã«é€ã‚‹æç”»ãƒ‡ãƒ¼ã‚¿
   ovrLayerEyeFov layerData;
 
-  // Oculus Rift ‚ÉƒŒƒ“ƒ_ƒŠƒ“ƒO‚·‚éƒtƒŒ[ƒ€‚Ì”Ô†
+  // Oculus Rift ã«ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã™ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ ã®ç•ªå·
   long long frameIndex;
 
-  // Oculus Rift •\¦—p‚Ì FBO ‚ÌƒfƒvƒXƒeƒNƒXƒ`ƒƒ
+  // Oculus Rift è¡¨ç¤ºç”¨ã® FBO ã®ãƒ‡ãƒ—ã‚¹ãƒ†ã‚¯ã‚¹ãƒãƒ£
   GLuint oculusDepth[ovrEye_Count];
 
-  // ƒ~ƒ‰[•\¦—p‚Ì FBO ‚ÌƒTƒCƒY
+  // ãƒŸãƒ©ãƒ¼è¡¨ç¤ºç”¨ã® FBO ã®ã‚µã‚¤ã‚º
   int mirrorWidth, mirrorHeight;
 
-  // ƒ~ƒ‰[•\¦—p‚Ì FBO ‚ÌƒJƒ‰[ƒeƒNƒXƒ`ƒƒ
+  // ãƒŸãƒ©ãƒ¼è¡¨ç¤ºç”¨ã® FBO ã®ã‚«ãƒ©ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£
   ovrMirrorTexture mirrorTexture;
 #  else
-  // Oculus Rift ‚É‘—‚é•`‰æƒf[ƒ^
+  // Oculus Rift ã«é€ã‚‹æç”»ãƒ‡ãƒ¼ã‚¿
   ovrLayer_Union layerData;
 
-  // Oculus Rift ‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒOî•ñ
+  // Oculus Rift ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°æƒ…å ±
   ovrEyeRenderDesc eyeRenderDesc[ovrEye_Count];
 
-  // Oculus Rift ‚Ì‹“_î•ñ
+  // Oculus Rift ã®è¦–ç‚¹æƒ…å ±
   ovrPosef eyePose[ovrEye_Count];
 
-  // ƒ~ƒ‰[•\¦—p‚Ì FBO ‚ÌƒJƒ‰[ƒeƒNƒXƒ`ƒƒ
+  // ãƒŸãƒ©ãƒ¼è¡¨ç¤ºç”¨ã® FBO ã®ã‚«ãƒ©ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£
   ovrGLTexture *mirrorTexture;
 #  endif
 #endif
 
-  // ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ••‚¶‚é
+  // ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å°ã˜ã‚‹
   Window(const Window &w);
 
-  // ‘ã“ü‚ğ••‚¶‚é
+  // ä»£å…¥ã‚’å°ã˜ã‚‹
   Window &operator=(const Window &w);
 
 public:
 
   //
-  // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+  // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
   //
   Window(const char *title = "GLFW Window", int width = 640, int height = 480,
     int fullscreen = 0, GLFWwindow *share = nullptr)
     : window(nullptr)
   {
-    // ‰Šú‰»Ï‚È‚ç true
+    // åˆæœŸåŒ–æ¸ˆãªã‚‰ true
     static bool initialized(false);
 
-    // GLFW ‚ª‰Šú‰»‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î
+    // GLFW ãŒåˆæœŸåŒ–ã•ã‚Œã¦ã„ãªã‘ã‚Œã°
     if (!initialized)
     {
-      // GLFW ‚ğ‰Šú‰»‚·‚é
+      // GLFW ã‚’åˆæœŸåŒ–ã™ã‚‹
       if (glfwInit() == GL_FALSE) return;
 
-      // ƒvƒƒOƒ‰ƒ€I—¹‚Ìˆ—‚ğ“o˜^
+      // ãƒ—ãƒ­ã‚°ãƒ©ãƒ çµ‚äº†æ™‚ã®å‡¦ç†ã‚’ç™»éŒ²
       atexit(glfwTerminate);
 
 #if defined(USE_OCULUS_RIFT)
-      // Oculus Rift (LibOVR) ‚ğ‰Šú‰»‚·‚é
+      // Oculus Rift (LibOVR) ã‚’åˆæœŸåŒ–ã™ã‚‹
       if (OVR_FAILURE(ovr_Initialize(nullptr)))
       {
         NOTIFY("LibOVR can not be initialized");
         return;
       }
 
-      // ƒvƒƒOƒ‰ƒ€I—¹‚É‚Í LibOVR ‚ğI—¹‚·‚é
+      // ãƒ—ãƒ­ã‚°ãƒ©ãƒ çµ‚äº†æ™‚ã«ã¯ LibOVR ã‚’çµ‚äº†ã™ã‚‹
       atexit(ovr_Shutdown);
 
-      // LUID ‚Í OpenGL ‚Å‚Íg‚Á‚Ä‚¢‚È‚¢‚ç‚µ‚¢
+      // LUID ã¯ OpenGL ã§ã¯ä½¿ã£ã¦ã„ãªã„ã‚‰ã—ã„
       ovrGraphicsLuid luid;
 
-      // Oculus Rift ‚ÌƒZƒbƒVƒ‡ƒ“‚ğì¬‚·‚é
+      // Oculus Rift ã®ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚’ä½œæˆã™ã‚‹
       session = nullptr;
       if (OVR_FAILURE(ovr_Create(&session, &luid)))
       {
@@ -235,102 +235,102 @@ public:
         return;
       }
 
-      // Oculus Rift ‚Ö‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒO‚Ég‚¤ FBO ‚Ì‰Šú’l‚ğİ’è‚·‚é
+      // Oculus Rift ã¸ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ã† FBO ã®åˆæœŸå€¤ã‚’è¨­å®šã™ã‚‹
       for (int eye = 0; eye < ovrEye_Count; ++eye) oculusFbo[eye] = 0;
 
-      // ƒ~ƒ‰[•\¦‚Ég‚¤ FBO ‚Ì‰Šú’l‚ğİ’è‚·‚é
+      // ãƒŸãƒ©ãƒ¼è¡¨ç¤ºã«ä½¿ã† FBO ã®åˆæœŸå€¤ã‚’è¨­å®šã™ã‚‹
       mirrorFbo = 0;
       mirrorTexture = nullptr;
 
 #  if OVR_PRODUCT_VERSION > 0
-      // ƒfƒtƒHƒ‹ƒg‚ÌƒOƒ‰ƒtƒBƒbƒNƒXƒAƒ_ƒvƒ^‚ªg‚í‚ê‚Ä‚¢‚é‚©Šm‚©‚ß‚é
+      // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚¢ãƒ€ãƒ—ã‚¿ãŒä½¿ã‚ã‚Œã¦ã„ã‚‹ã‹ç¢ºã‹ã‚ã‚‹
       if (Compare(luid, GetDefaultAdapterLuid())) return;
 
-      // Asynchronous TimeWarp ˆ—‚Ég‚¤ƒtƒŒ[ƒ€”Ô†‚Ì‰Šú’l‚ğİ’è‚·‚é
+      // Asynchronous TimeWarp å‡¦ç†ã«ä½¿ã†ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·ã®åˆæœŸå€¤ã‚’è¨­å®šã™ã‚‹
       frameIndex = 0LL;
 
-      // Oculus Rift ‚Ö‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒO‚Ég‚¤ FBO ‚ÌƒfƒvƒXƒeƒNƒXƒ`ƒƒ‚Ì‰Šú’l‚ğİ’è‚·‚é
+      // Oculus Rift ã¸ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ã† FBO ã®ãƒ‡ãƒ—ã‚¹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®åˆæœŸå€¤ã‚’è¨­å®šã™ã‚‹
       for (int eye = 0; eye < ovrEye_Count; ++eye) oculusDepth[eye] = 0;
 #  endif
 
-      // Oculus Rift ‚Å‚Íƒ_ƒuƒ‹ƒoƒbƒtƒ@ƒŠƒ“ƒO‚µ‚È‚¢
+      // Oculus Rift ã§ã¯ãƒ€ãƒ–ãƒ«ãƒãƒƒãƒ•ã‚¡ãƒªãƒ³ã‚°ã—ãªã„
       glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);
 
-      // Oculus Rift ‚Å‚Í SRGB ‚ÅƒŒƒ“ƒ_ƒŠƒ“ƒO‚·‚é
+      // Oculus Rift ã§ã¯ SRGB ã§ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã™ã‚‹
       glfwWindowHint(GLFW_SRGB_CAPABLE, GL_TRUE);
 #endif
 
-      // OpenGL Version 3.2 Core Profile ‚ğ‘I‘ğ‚·‚é
+      // OpenGL Version 3.2 Core Profile ã‚’é¸æŠã™ã‚‹
       glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
       glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
       glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
       glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-      // –îˆóƒL[‚Æƒ}ƒEƒX‘€ì‚Ì‰Šú’l‚ğİ’è‚·‚é
+      // çŸ¢å°ã‚­ãƒ¼ã¨ãƒã‚¦ã‚¹æ“ä½œã®åˆæœŸå€¤ã‚’è¨­å®šã™ã‚‹
       arrow[0] = arrow[1] = 0;
       shift_arrow[0] = shift_arrow[1] = 0;
       control_arrow[0] = control_arrow[1] = 0;
       wheel_rotation = shift_wheel_rotation = control_wheel_rotation = 0.0;
 
-      // ‰Šú‰»Ï‚İ‚Ìˆó‚ğ‚Â‚¯‚é
+      // åˆæœŸåŒ–æ¸ˆã¿ã®å°ã‚’ã¤ã‘ã‚‹
       initialized = true;
     }
 
-    // ƒfƒBƒXƒvƒŒƒC‚Ìî•ñ
+    // ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤ã®æƒ…å ±
     GLFWmonitor *monitor(nullptr);
 
-    // ƒtƒ‹ƒXƒNƒŠ[ƒ“•\¦
+    // ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³è¡¨ç¤º
     if (fullscreen > 0)
     {
-      // Ú‘±‚³‚ê‚Ä‚¢‚éƒ‚ƒjƒ^‚Ì”‚ğ”‚¦‚é
+      // æ¥ç¶šã•ã‚Œã¦ã„ã‚‹ãƒ¢ãƒ‹ã‚¿ã®æ•°ã‚’æ•°ãˆã‚‹
       int mcount;
       GLFWmonitor **const monitors = glfwGetMonitors(&mcount);
 
-      // ƒZƒJƒ“ƒ_ƒŠƒ‚ƒjƒ^‚ª‚ ‚ê‚Î‚»‚ê‚ğg‚¤
+      // ã‚»ã‚«ãƒ³ãƒ€ãƒªãƒ¢ãƒ‹ã‚¿ãŒã‚ã‚Œã°ãã‚Œã‚’ä½¿ã†
       if (fullscreen > mcount) fullscreen = mcount;
       monitor = monitors[fullscreen - 1];
 
-      // ƒ‚ƒjƒ^‚Ìƒ‚[ƒh‚ğ’²‚×‚é
+      // ãƒ¢ãƒ‹ã‚¿ã®ãƒ¢ãƒ¼ãƒ‰ã‚’èª¿ã¹ã‚‹
       const GLFWvidmode *mode(glfwGetVideoMode(monitor));
 
-      // ƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY‚ğƒfƒBƒXƒvƒŒƒC‚ÌƒTƒCƒY‚É‚·‚é
+      // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºã‚’ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤ã®ã‚µã‚¤ã‚ºã«ã™ã‚‹
       width = mode->width;
       height = mode->height;
     }
 
-    // GLFW ‚ÌƒEƒBƒ“ƒhƒE‚ğì¬‚·‚é
+    // GLFW ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆã™ã‚‹
     window = glfwCreateWindow(width, height, title, monitor, share);
 
-    // ƒEƒBƒ“ƒhƒE‚ªì¬‚Å‚«‚È‚¯‚ê‚Î–ß‚é
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒä½œæˆã§ããªã‘ã‚Œã°æˆ»ã‚‹
     if (!window) return;
 
-    // Œ»İ‚ÌƒEƒBƒ“ƒhƒE‚ğˆ—‘ÎÛ‚É‚·‚é
+    // ç¾åœ¨ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’å‡¦ç†å¯¾è±¡ã«ã™ã‚‹
     glfwMakeContextCurrent(window);
 
-    // ƒQ[ƒ€ƒOƒ‰ƒtƒBƒbƒNƒX“Á˜_‚Ì“s‡‚É‚æ‚é‰Šú‰»‚ğs‚¤
+    // ã‚²ãƒ¼ãƒ ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ç‰¹è«–ã®éƒ½åˆã«ã‚ˆã‚‹åˆæœŸåŒ–ã‚’è¡Œã†
     ggInit();
 
-    // ‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ì this ƒ|ƒCƒ“ƒ^‚ğ‹L˜^‚µ‚Ä‚¨‚­
+    // ã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã® this ãƒã‚¤ãƒ³ã‚¿ã‚’è¨˜éŒ²ã—ã¦ãŠã
     glfwSetWindowUserPointer(window, this);
 
-    // ƒL[ƒ{[ƒh‚ğ‘€ì‚µ‚½‚Ìˆ—‚ğ“o˜^‚·‚é
+    // ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚’æ“ä½œã—ãŸæ™‚ã®å‡¦ç†ã‚’ç™»éŒ²ã™ã‚‹
     glfwSetKeyCallback(window, keyboard);
 
-    // ƒ}ƒEƒXƒ{ƒ^ƒ“‚ğ‘€ì‚µ‚½‚Æ‚«‚Ìˆ—‚ğ“o˜^‚·‚é
+    // ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³ã‚’æ“ä½œã—ãŸã¨ãã®å‡¦ç†ã‚’ç™»éŒ²ã™ã‚‹
     glfwSetMouseButtonCallback(window, mouse);
 
-    // ƒ}ƒEƒXƒzƒC[ƒ‹‘€ì‚ÉŒÄ‚Ño‚·ˆ—‚ğ“o˜^‚·‚é
+    // ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«æ“ä½œæ™‚ã«å‘¼ã³å‡ºã™å‡¦ç†ã‚’ç™»éŒ²ã™ã‚‹
     glfwSetScrollCallback(window, wheel);
 
-    // ƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY•ÏX‚ÉŒÄ‚Ño‚·ˆ—‚ğ“o˜^‚·‚é
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºå¤‰æ›´æ™‚ã«å‘¼ã³å‡ºã™å‡¦ç†ã‚’ç™»éŒ²ã™ã‚‹
     glfwSetFramebufferSizeCallback(window, resize);
 
 #if defined(USE_OCULUS_RIFT)
-    // Oculus Rift ‚Ìî•ñ‚ğæ‚èo‚·
+    // Oculus Rift ã®æƒ…å ±ã‚’å–ã‚Šå‡ºã™
     hmdDesc = ovr_GetHmdDesc(session);
 
 #  if defined(_DEBUG)
-    // Oculus Rift ‚Ìî•ñ‚ğ•\¦‚·‚é
+    // Oculus Rift ã®æƒ…å ±ã‚’è¡¨ç¤ºã™ã‚‹
     std::cerr
       << "\nProduct name: " << hmdDesc.ProductName
       << "\nResolution:   " << hmdDesc.Resolution.w << " x " << hmdDesc.Resolution.h
@@ -353,41 +353,41 @@ public:
       << ")\n" << std::endl;
 #  endif
 
-    // Oculus Rift ‚É“]‘—‚·‚é•`‰æƒf[ƒ^‚ğì¬‚·‚é
+    // Oculus Rift ã«è»¢é€ã™ã‚‹æç”»ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆã™ã‚‹
 #  if OVR_PRODUCT_VERSION > 0
     layerData.Header.Type = ovrLayerType_EyeFov;
 #  else
     layerData.Header.Type = ovrLayerType_EyeFovDepth;
 #  endif
-    layerData.Header.Flags = ovrLayerFlag_TextureOriginAtBottomLeft;   // OpenGL ‚È‚Ì‚Å¶‰º‚ªŒ´“_
+    layerData.Header.Flags = ovrLayerFlag_TextureOriginAtBottomLeft;   // OpenGL ãªã®ã§å·¦ä¸‹ãŒåŸç‚¹
 
-    // Oculus Rift •\¦—p‚Ì FBO ‚ğì¬‚·‚é
+    // Oculus Rift è¡¨ç¤ºç”¨ã® FBO ã‚’ä½œæˆã™ã‚‹
     for (int eye = 0; eye < ovrEye_Count; ++eye)
     {
-      // Oculus Rift ‚Ì‹–ì‚ğæ“¾‚·‚é
+      // Oculus Rift ã®è¦–é‡ã‚’å–å¾—ã™ã‚‹
       const auto &fov(hmdDesc.DefaultEyeFov[ovrEyeType(eye)]);
 
-      // Oculus Rift •\¦—p‚Ì FBO ‚ÌƒTƒCƒY‚ğ‹‚ß‚é
+      // Oculus Rift è¡¨ç¤ºç”¨ã® FBO ã®ã‚µã‚¤ã‚ºã‚’æ±‚ã‚ã‚‹
       const auto textureSize(ovr_GetFovTextureSize(session, ovrEyeType(eye), fov, 1.0f));
 
-      // Oculus Rift •\¦—p‚Ì FBO ‚ÌƒAƒXƒyƒNƒg”ä‚ğ‹‚ß‚é
+      // Oculus Rift è¡¨ç¤ºç”¨ã® FBO ã®ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ã‚’æ±‚ã‚ã‚‹
       aspect = static_cast<GLfloat>(textureSize.w) / static_cast<GLfloat>(textureSize.h);
 
-      // Oculus Rift ‚ÌƒXƒNƒŠ[ƒ“‚ÌƒTƒCƒY‚ğ•Û‘¶‚·‚é
+      // Oculus Rift ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®ã‚µã‚¤ã‚ºã‚’ä¿å­˜ã™ã‚‹
       screen[eye][0] = -fov.LeftTan;
       screen[eye][1] = fov.RightTan;
       screen[eye][2] = -fov.DownTan;
       screen[eye][3] = fov.UpTan;
 
 #  if OVR_PRODUCT_VERSION > 0
-      // •`‰æƒf[ƒ^‚É‹–ì‚ğİ’è‚·‚é
+      // æç”»ãƒ‡ãƒ¼ã‚¿ã«è¦–é‡ã‚’è¨­å®šã™ã‚‹
       layerData.Fov[eye] = fov;
 
-      // •`‰æƒf[ƒ^‚Éƒrƒ…[ƒ|[ƒg‚ğİ’è‚·‚é
+      // æç”»ãƒ‡ãƒ¼ã‚¿ã«ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹
       layerData.Viewport[eye].Pos = OVR::Vector2i(0, 0);
       layerData.Viewport[eye].Size = textureSize;
 
-      // Oculus Rift •\¦—p‚Ì FBO ‚ÌƒJƒ‰[ƒoƒbƒtƒ@‚Æ‚µ‚Äg‚¤ƒeƒNƒXƒ`ƒƒƒZƒbƒg‚Ì“Á«
+      // Oculus Rift è¡¨ç¤ºç”¨ã® FBO ã®ã‚«ãƒ©ãƒ¼ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦ä½¿ã†ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚»ãƒƒãƒˆã®ç‰¹æ€§
       const ovrTextureSwapChainDesc colorDesc =
       {
         ovrTexture_2D,                    // Type
@@ -401,18 +401,18 @@ public:
         0, 0
       };
 
-      // Oculus Rift •\¦—p‚Ì FBO ‚ÌƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Æ‚µ‚Äg‚¤ƒeƒNƒXƒ`ƒƒƒ`ƒFƒCƒ“‚ğì¬‚·‚é
+      // Oculus Rift è¡¨ç¤ºç”¨ã® FBO ã®ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ã—ã¦ä½¿ã†ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒã‚§ã‚¤ãƒ³ã‚’ä½œæˆã™ã‚‹
       layerData.ColorTexture[eye] = nullptr;
       if (OVR_SUCCESS(ovr_CreateTextureSwapChainGL(session, &colorDesc, &layerData.ColorTexture[eye])))
       {
-        // ì¬‚µ‚½ƒeƒNƒXƒ`ƒƒƒ`ƒFƒCƒ“‚Ì’·‚³‚ğæ“¾‚·‚é
+        // ä½œæˆã—ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒã‚§ã‚¤ãƒ³ã®é•·ã•ã‚’å–å¾—ã™ã‚‹
         int length(0);
         if (OVR_SUCCESS(ovr_GetTextureSwapChainLength(session, layerData.ColorTexture[eye], &length)))
         {
-          // ƒeƒNƒXƒ`ƒƒƒ`ƒFƒCƒ“‚ÌŒÂX‚Ì—v‘f‚É‚Â‚¢‚Ä
+          // ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒã‚§ã‚¤ãƒ³ã®å€‹ã€…ã®è¦ç´ ã«ã¤ã„ã¦
           for (int i = 0; i < length; ++i)
           {
-            // ƒeƒNƒXƒ`ƒƒ‚Ìƒpƒ‰ƒ[ƒ^‚ğİ’è‚·‚é
+            // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹
             GLuint texId;
             ovr_GetTextureSwapChainBufferGL(session, layerData.ColorTexture[eye], i, &texId);
             glBindTexture(GL_TEXTURE_2D, texId);
@@ -423,7 +423,7 @@ public:
           }
         }
 
-        // Oculus Rift •\¦—p‚Ì FBO ‚ÌƒfƒvƒXƒoƒbƒtƒ@‚Æ‚µ‚Äg‚¤ƒeƒNƒXƒ`ƒƒ‚ğì¬‚·‚é
+        // Oculus Rift è¡¨ç¤ºç”¨ã® FBO ã®ãƒ‡ãƒ—ã‚¹ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦ä½¿ã†ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œæˆã™ã‚‹
         glGenTextures(1, &oculusDepth[eye]);
         glBindTexture(GL_TEXTURE_2D, oculusDepth[eye]);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, textureSize.w, textureSize.h, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
@@ -433,38 +433,38 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
       }
 #  else
-      // •`‰æƒf[ƒ^‚É‹–ì‚ğİ’è‚·‚é
+      // æç”»ãƒ‡ãƒ¼ã‚¿ã«è¦–é‡ã‚’è¨­å®šã™ã‚‹
       layerData.EyeFov.Fov[eye] = fov;
 
-      // •`‰æƒf[ƒ^‚Éƒrƒ…[ƒ|[ƒg‚ğİ’è‚·‚é
+      // æç”»ãƒ‡ãƒ¼ã‚¿ã«ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹
       layerData.EyeFov.Viewport[eye].Pos = OVR::Vector2i(0, 0);
       layerData.EyeFov.Viewport[eye].Size = textureSize;
 
-      // Oculus Rift •\¦—p‚Ì FBO ‚ÌƒJƒ‰[ƒoƒbƒtƒ@‚Æ‚µ‚Äg‚¤ƒeƒNƒXƒ`ƒƒƒZƒbƒg‚ğì¬‚·‚é
+      // Oculus Rift è¡¨ç¤ºç”¨ã® FBO ã®ã‚«ãƒ©ãƒ¼ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦ä½¿ã†ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚»ãƒƒãƒˆã‚’ä½œæˆã™ã‚‹
       ovrSwapTextureSet *colorTexture;
       ovr_CreateSwapTextureSetGL(session, GL_SRGB8_ALPHA8, textureSize.w, textureSize.h, &colorTexture);
       layerData.EyeFov.ColorTexture[eye] = colorTexture;
 
-      // Oculus Rift •\¦—p‚Ì FBO ‚ÌƒfƒvƒXƒoƒbƒtƒ@‚Æ‚µ‚Äg‚¤ƒeƒNƒXƒ`ƒƒƒZƒbƒg‚ğì¬‚·‚é
+      // Oculus Rift è¡¨ç¤ºç”¨ã® FBO ã®ãƒ‡ãƒ—ã‚¹ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦ä½¿ã†ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚»ãƒƒãƒˆã‚’ä½œæˆã™ã‚‹
       ovrSwapTextureSet *depthTexture;
       ovr_CreateSwapTextureSetGL(session, GL_DEPTH_COMPONENT32F, textureSize.w, textureSize.h, &depthTexture);
       layerData.EyeFovDepth.DepthTexture[eye] = depthTexture;
 
-      // Oculus Rift ‚ÌƒŒƒ“ƒY•â³“™‚Ìİ’è’l‚ğæ“¾‚·‚é
+      // Oculus Rift ã®ãƒ¬ãƒ³ã‚ºè£œæ­£ç­‰ã®è¨­å®šå€¤ã‚’å–å¾—ã™ã‚‹
       eyeRenderDesc[eye] = ovr_GetRenderDesc(session, ovrEyeType(eye), fov);
 #  endif
     }
 
 #  if OVR_PRODUCT_VERSION > 0
-    // p¨‚Ìƒgƒ‰ƒbƒLƒ“ƒO‚É‚¨‚¯‚éŒ´“_‚ğ–Ú‚ÌˆÊ’u‚Éİ’è‚·‚é
-    // (Œ´“_‚ğ°‚Ì‚‚³‚Éİ’è‚·‚é‚Æ‚«‚Í ovrTrackingOrigin_FloorLevel ‚ğw’è‚·‚é)
+    // å§¿å‹¢ã®ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ã«ãŠã‘ã‚‹åŸç‚¹ã‚’ç›®ã®ä½ç½®ã«è¨­å®šã™ã‚‹
+    // (åŸç‚¹ã‚’åºŠã®é«˜ã•ã«è¨­å®šã™ã‚‹ã¨ãã¯ ovrTrackingOrigin_FloorLevel ã‚’æŒ‡å®šã™ã‚‹)
     ovr_SetTrackingOriginType(session, ovrTrackingOrigin_EyeLevel);
 
-    // HMD ‚ÌŒ»İˆÊ’u‚ğŠî€‚É‚·‚é
-    // (ovrTrackingOrigin_FloorLevel ‚Ì‚Æ‚«‚Í‚‚³‚ÍƒŠƒZƒbƒg‚³‚ê‚È‚¢)
+    // HMD ã®ç¾åœ¨ä½ç½®ã‚’åŸºæº–ã«ã™ã‚‹
+    // (ovrTrackingOrigin_FloorLevel ã®ã¨ãã¯é«˜ã•ã¯ãƒªã‚»ãƒƒãƒˆã•ã‚Œãªã„)
     ovr_RecenterTrackingOrigin(session);
 
-    // ƒ~ƒ‰[•\¦—p‚Ì FBO ‚ğì¬‚·‚é
+    // ãƒŸãƒ©ãƒ¼è¡¨ç¤ºç”¨ã® FBO ã‚’ä½œæˆã™ã‚‹
     const ovrMirrorTextureDesc mirrorDesc =
     {
       OVR_FORMAT_R8G8B8A8_UNORM_SRGB,   // Format
@@ -473,14 +473,14 @@ public:
       0                                 // Flags
     };
 
-    // ƒ~ƒ‰[•\¦—p‚Ì FBO ‚ÌƒJƒ‰[ƒoƒbƒtƒ@‚Æ‚µ‚Äg‚¤ƒeƒNƒXƒ`ƒƒ‚ğì¬‚·‚é
+    // ãƒŸãƒ©ãƒ¼è¡¨ç¤ºç”¨ã® FBO ã®ã‚«ãƒ©ãƒ¼ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦ä½¿ã†ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œæˆã™ã‚‹
     if (OVR_SUCCESS(ovr_CreateMirrorTextureGL(session, &mirrorDesc, &mirrorTexture)))
     {
-      // ì¬‚µ‚½ƒeƒNƒXƒ`ƒƒ‚ÌƒeƒNƒXƒ`ƒƒ–¼‚ğ“¾‚é
+      // ä½œæˆã—ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£åã‚’å¾—ã‚‹
       GLuint texId;
       if (OVR_SUCCESS(ovr_GetMirrorTextureBufferGL(session, mirrorTexture, &texId)))
       {
-        // ì¬‚µ‚½ƒeƒNƒXƒ`ƒƒ‚ğƒ~ƒ‰[•\¦—p‚Ì FBO ‚ÉƒJƒ‰[ƒoƒbƒtƒ@‚Æ‚µ‚Ä‘g‚İ‚Ş
+        // ä½œæˆã—ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ãƒŸãƒ©ãƒ¼è¡¨ç¤ºç”¨ã® FBO ã«ã‚«ãƒ©ãƒ¼ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦çµ„ã¿è¾¼ã‚€
         glGenFramebuffers(1, &mirrorFbo);
         glBindFramebuffer(GL_READ_FRAMEBUFFER, mirrorFbo);
         glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texId, 0);
@@ -489,7 +489,7 @@ public:
       }
     }
 #  else
-    // ƒ~ƒ‰[•\¦—p‚Ì FBO ‚ğì¬‚·‚é
+    // ãƒŸãƒ©ãƒ¼è¡¨ç¤ºç”¨ã® FBO ã‚’ä½œæˆã™ã‚‹
     if (OVR_SUCCESS(ovr_CreateMirrorTextureGL(session, GL_SRGB8_ALPHA8, width, height, reinterpret_cast<ovrTexture **>(&mirrorTexture))))
     {
       glGenFramebuffers(1, &mirrorFbo);
@@ -500,36 +500,36 @@ public:
     }
 #  endif
 
-    // Oculus Rift ‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒO—p‚Ì FBO ‚ğì¬‚·‚é
+    // Oculus Rift ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ç”¨ã® FBO ã‚’ä½œæˆã™ã‚‹
     glGenFramebuffers(ovrEye_Count, oculusFbo);
 
-    // Oculus Rift ‚ÉƒŒƒ“ƒ_ƒŠƒ“ƒO‚·‚é‚Æ‚«‚Í sRGB ƒJƒ‰[ƒXƒy[ƒX‚ğg‚¤
+    // Oculus Rift ã«ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã™ã‚‹ã¨ãã¯ sRGB ã‚«ãƒ©ãƒ¼ã‚¹ãƒšãƒ¼ã‚¹ã‚’ä½¿ã†
     glEnable(GL_FRAMEBUFFER_SRGB);
 
-    // Oculus Rift ‚Ö‚Ì•\¦‚Å‚ÍƒXƒƒbƒvŠÔŠu‚ğ‘Ò‚½‚È‚¢
+    // Oculus Rift ã¸ã®è¡¨ç¤ºã§ã¯ã‚¹ãƒ¯ãƒƒãƒ—é–“éš”ã‚’å¾…ãŸãªã„
     glfwSwapInterval(0);
 #else
-    // ƒXƒƒbƒvŠÔŠu‚ğ‘Ò‚Â
+    // ã‚¹ãƒ¯ãƒƒãƒ—é–“éš”ã‚’å¾…ã¤
     glfwSwapInterval(1);
 #endif
 
-    // ƒrƒ…[ƒ|[ƒg‚Æ“Š‰e•ÏŠ·s—ñ‚ğ‰Šú‰»‚·‚é
+    // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã¨æŠ•å½±å¤‰æ›è¡Œåˆ—ã‚’åˆæœŸåŒ–ã™ã‚‹
     resize(window, width, height);
   }
 
   //
-  // ƒfƒXƒgƒ‰ƒNƒ^
+  // ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
   //
   virtual ~Window()
   {
-    // ƒEƒBƒ“ƒhƒE‚ªì¬‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î–ß‚é
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒä½œæˆã•ã‚Œã¦ã„ãªã‘ã‚Œã°æˆ»ã‚‹
     if (!window) return;
 
 #if defined(USE_OCULUS_RIFT)
-    // ƒ~ƒ‰[•\¦—p‚Ì FBO ‚ğíœ‚·‚é
+    // ãƒŸãƒ©ãƒ¼è¡¨ç¤ºç”¨ã® FBO ã‚’å‰Šé™¤ã™ã‚‹
     if (mirrorFbo) glDeleteFramebuffers(1, &mirrorFbo);
 
-    // ƒ~ƒ‰[•\¦‚Ég‚Á‚½ƒeƒNƒXƒ`ƒƒ‚ğŠJ•ú‚·‚é
+    // ãƒŸãƒ©ãƒ¼è¡¨ç¤ºã«ä½¿ã£ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’é–‹æ”¾ã™ã‚‹
     if (mirrorTexture)
     {
 #  if OVR_PRODUCT_VERSION > 0
@@ -540,25 +540,25 @@ public:
 #  endif
     }
 
-    // Oculus Rift ‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒO—p‚Ì FBO ‚ğíœ‚·‚é
+    // Oculus Rift ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ç”¨ã® FBO ã‚’å‰Šé™¤ã™ã‚‹
     glDeleteFramebuffers(ovrEye_Count, oculusFbo);
 
-    // Oculus Rift •\¦—p‚Ì FBO ‚ğíœ‚·‚é
+    // Oculus Rift è¡¨ç¤ºç”¨ã® FBO ã‚’å‰Šé™¤ã™ã‚‹
     for (int eye = 0; eye < ovrEye_Count; ++eye)
     {
 #  if OVR_PRODUCT_VERSION > 0
-      // ƒŒƒ“ƒ_ƒŠƒ“ƒOƒ^[ƒQƒbƒg‚Ég‚Á‚½ƒeƒNƒXƒ`ƒƒ‚ğŠJ•ú‚·‚é
+      // ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«ä½¿ã£ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’é–‹æ”¾ã™ã‚‹
       if (layerData.ColorTexture[eye])
       {
         ovr_DestroyTextureSwapChain(session, layerData.ColorTexture[eye]);
         layerData.ColorTexture[eye] = nullptr;
       }
 
-      // ƒfƒvƒXƒoƒbƒtƒ@‚Æ‚µ‚Äg‚Á‚½ƒeƒNƒXƒ`ƒƒ‚ğŠJ•ú‚·‚é
+      // ãƒ‡ãƒ—ã‚¹ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦ä½¿ã£ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’é–‹æ”¾ã™ã‚‹
       glDeleteTextures(1, &oculusDepth[eye]);
       oculusDepth[eye] = 0;
 #  else
-      // ƒŒƒ“ƒ_ƒŠƒ“ƒOƒ^[ƒQƒbƒg‚Ég‚Á‚½ƒeƒNƒXƒ`ƒƒ‚ğŠJ•ú‚·‚é
+      // ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«ä½¿ã£ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’é–‹æ”¾ã™ã‚‹
       auto *const colorTexture(layerData.EyeFov.ColorTexture[eye]);
       for (int i = 0; i < colorTexture->TextureCount; ++i)
       {
@@ -567,7 +567,7 @@ public:
       }
       ovr_DestroySwapTextureSet(session, colorTexture);
 
-      // ƒfƒvƒXƒoƒbƒtƒ@‚Æ‚µ‚Äg‚Á‚½ƒeƒNƒXƒ`ƒƒ‚ğŠJ•ú‚·‚é
+      // ãƒ‡ãƒ—ã‚¹ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦ä½¿ã£ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’é–‹æ”¾ã™ã‚‹
       auto *const depthTexture(layerData.EyeFovDepth.DepthTexture[eye]);
       for (int i = 0; i < depthTexture->TextureCount; ++i)
       {
@@ -578,76 +578,76 @@ public:
 #  endif
     }
 
-    // Oculus Rift ‚ÌƒZƒbƒVƒ‡ƒ“‚ğ”jŠü‚·‚é
+    // Oculus Rift ã®ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚’ç ´æ£„ã™ã‚‹
     ovr_Destroy(session);
     session = nullptr;
 #endif
 
-    // ƒEƒBƒ“ƒhƒE‚ğ”jŠü‚·‚é
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç ´æ£„ã™ã‚‹
     glfwDestroyWindow(window);
   }
 
 #if defined(USE_OCULUS_RIFT)
   //
-  // Oculus Rift ‚É‚æ‚é•`‰æŠJn
+  // Oculus Rift ã«ã‚ˆã‚‹æç”»é–‹å§‹
   //
   bool start()
   {
 #  if OVR_PRODUCT_VERSION > 0
-    // ƒZƒbƒVƒ‡ƒ“‚Ìó‘Ô‚ğæ“¾‚·‚é
+    // ã‚»ãƒƒã‚·ãƒ§ãƒ³ã®çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
     ovrSessionStatus sessionStatus;
     ovr_GetSessionStatus(session, &sessionStatus);
 
-    // ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ªI—¹‚ğ—v‹‚µ‚Ä‚¢‚é‚Æ‚«‚ÍƒEƒBƒ“ƒhƒE‚ÌƒNƒ[ƒYƒtƒ‰ƒO‚ğ—§‚Ä‚é
+    // ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒçµ‚äº†ã‚’è¦æ±‚ã—ã¦ã„ã‚‹ã¨ãã¯ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¯ãƒ­ãƒ¼ã‚ºãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
     if (sessionStatus.ShouldQuit) glfwSetWindowShouldClose(window, GL_TRUE);
 
-    // Oculus Rift ‚É•\¦‚³‚ê‚Ä‚¢‚È‚¢‚Æ‚«‚Í–ß‚é
+    // Oculus Rift ã«è¡¨ç¤ºã•ã‚Œã¦ã„ãªã„ã¨ãã¯æˆ»ã‚‹
     if (!sessionStatus.IsVisible) return false;
 
-    // Œ»İ‚Ìó‘Ô‚ğƒgƒ‰ƒbƒLƒ“ƒO‚ÌŒ´“_‚É‚·‚é
+    // ç¾åœ¨ã®çŠ¶æ…‹ã‚’ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ã®åŸç‚¹ã«ã™ã‚‹
     if (sessionStatus.ShouldRecenter) ovr_RecenterTrackingOrigin(session);
 
-    // Oculus Remote ‚Ì Back ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚ç‹“_‚ÌˆÊ’u‚ğƒŠƒZƒbƒg‚·‚é
+    // Oculus Remote ã® Back ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã‚‰è¦–ç‚¹ã®ä½ç½®ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
     ovrInputState inputState;
     if (OVR_SUCCESS(ovr_GetInputState(session, ovrControllerType_Remote, &inputState)))
     {
       if (inputState.Buttons & ovrButton_Back) ovr_RecenterTrackingOrigin(session);
     }
 
-    // HmdToEyeOffset ‚È‚Ç‚ÍÀs‚É•Ï‰»‚·‚é‚Ì‚Å–ˆƒtƒŒ[ƒ€ ovr_GetRenderDesc() ‚Å ovrEyeRenderDesc ‚ğæ“¾‚·‚é
+    // HmdToEyeOffset ãªã©ã¯å®Ÿè¡Œæ™‚ã«å¤‰åŒ–ã™ã‚‹ã®ã§æ¯ãƒ•ãƒ¬ãƒ¼ãƒ  ovr_GetRenderDesc() ã§ ovrEyeRenderDesc ã‚’å–å¾—ã™ã‚‹
     const ovrEyeRenderDesc eyeRenderDesc[] =
     {
       ovr_GetRenderDesc(session, ovrEyeType(0), hmdDesc.DefaultEyeFov[0]),
       ovr_GetRenderDesc(session, ovrEyeType(1), hmdDesc.DefaultEyeFov[1])
     };
 
-    // Oculus Rift ‚ÌƒXƒNƒŠ[ƒ“‚Ìƒwƒbƒhƒgƒ‰ƒbƒLƒ“ƒOˆÊ’u‚©‚ç‚Ì•ÏˆÊ‚ğæ“¾‚·‚é
+    // Oculus Rift ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®ãƒ˜ãƒƒãƒ‰ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ä½ç½®ã‹ã‚‰ã®å¤‰ä½ã‚’å–å¾—ã™ã‚‹
     const ovrVector3f hmdToEyeOffset[] =
     {
       eyeRenderDesc[0].HmdToEyeOffset,
       eyeRenderDesc[1].HmdToEyeOffset
     };
 
-    // ‹“_‚Ìp¨î•ñ‚ğæ“¾‚·‚é
+    // è¦–ç‚¹ã®å§¿å‹¢æƒ…å ±ã‚’å–å¾—ã™ã‚‹
     ovr_GetEyePoses(session, ++frameIndex, ovrTrue, hmdToEyeOffset, layerData.RenderPose, &layerData.SensorSampleTime);
 #  else
-    // ƒtƒŒ[ƒ€‚Ìƒ^ƒCƒ~ƒ“ƒOŒv‘ªŠJn
+    // ãƒ•ãƒ¬ãƒ¼ãƒ ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°è¨ˆæ¸¬é–‹å§‹
     const auto ftiming(ovr_GetPredictedDisplayTime(session, 0));
 
-    // sensorSampleTime ‚Ìæ“¾‚Í‰Â”\‚ÈŒÀ‚è ovr_GetTrackingState() ‚Ì‹ß‚­‚Ås‚¤
+    // sensorSampleTime ã®å–å¾—ã¯å¯èƒ½ãªé™ã‚Š ovr_GetTrackingState() ã®è¿‘ãã§è¡Œã†
     layerData.EyeFov.SensorSampleTime = ovr_GetTimeInSeconds();
 
-    // ƒwƒbƒhƒgƒ‰ƒbƒLƒ“ƒO‚Ìó‘Ô‚ğæ“¾‚·‚é
+    // ãƒ˜ãƒƒãƒ‰ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ã®çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
     const auto hmdState(ovr_GetTrackingState(session, ftiming, ovrTrue));
 
-    // Oculus Rift ‚ÌƒXƒNƒŠ[ƒ“‚Ìƒwƒbƒhƒgƒ‰ƒbƒLƒ“ƒOˆÊ’u‚©‚ç‚Ì•ÏˆÊ‚ğæ“¾‚·‚é
+    // Oculus Rift ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®ãƒ˜ãƒƒãƒ‰ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ä½ç½®ã‹ã‚‰ã®å¤‰ä½ã‚’å–å¾—ã™ã‚‹
     const ovrVector3f hmdToEyeViewOffset[] =
     {
       eyeRenderDesc[0].HmdToEyeViewOffset,
       eyeRenderDesc[1].HmdToEyeViewOffset
     };
 
-    // ‹“_‚Ìp¨î•ñ‚ğ‹‚ß‚é
+    // è¦–ç‚¹ã®å§¿å‹¢æƒ…å ±ã‚’æ±‚ã‚ã‚‹
     ovr_CalcEyePoses(hmdState.HeadPose.ThePose, hmdToEyeViewOffset, eyePose);
 #  endif
 
@@ -655,71 +655,71 @@ public:
   }
 
   //
-  // Oculus Rift ‚Ì•`‰æ‚·‚é–Ú‚Ìw’è
+  // Oculus Rift ã®æç”»ã™ã‚‹ç›®ã®æŒ‡å®š
   //
   void select(int eye, GLfloat *screen, GLfloat *position, GLfloat *orientation)
   {
 #  if OVR_PRODUCT_VERSION > 0
-    // Oculus Rift ‚ÉƒŒƒ“ƒ_ƒŠƒ“ƒO‚·‚é FBO ‚ÉØ‚è‘Ö‚¦‚é
+    // Oculus Rift ã«ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã™ã‚‹ FBO ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
     if (layerData.ColorTexture[eye])
     {
-      // FBO ‚ÌƒJƒ‰[ƒoƒbƒtƒ@‚Ég‚¤Œ»İ‚ÌƒeƒNƒXƒ`ƒƒ‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚é
+      // FBO ã®ã‚«ãƒ©ãƒ¼ãƒãƒƒãƒ•ã‚¡ã«ä½¿ã†ç¾åœ¨ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
       int curIndex;
       ovr_GetTextureSwapChainCurrentIndex(session, layerData.ColorTexture[eye], &curIndex);
 
-      // FBO ‚ÌƒJƒ‰[ƒoƒbƒtƒ@‚Ég‚¤ƒeƒNƒXƒ`ƒƒ‚ğæ“¾‚·‚é
+      // FBO ã®ã‚«ãƒ©ãƒ¼ãƒãƒƒãƒ•ã‚¡ã«ä½¿ã†ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å–å¾—ã™ã‚‹
       GLuint curTexId;
       ovr_GetTextureSwapChainBufferGL(session, layerData.ColorTexture[eye], curIndex, &curTexId);
 
-      // FBO ‚ğİ’è‚·‚é
+      // FBO ã‚’è¨­å®šã™ã‚‹
       glBindFramebuffer(GL_FRAMEBUFFER, oculusFbo[eye]);
       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, curTexId, 0);
       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, oculusDepth[eye], 0);
 
-      // ƒrƒ…[ƒ|[ƒg‚ğİ’è‚·‚é
+      // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹
       const auto &vp(layerData.Viewport[eye]);
       glViewport(vp.Pos.x, vp.Pos.y, vp.Size.w, vp.Size.h);
     }
 
-    // Oculus Rift ‚Ì•Ğ–Ú‚ÌˆÊ’u‚Æ‰ñ“]‚ğæ“¾‚·‚é
+    // Oculus Rift ã®ç‰‡ç›®ã®ä½ç½®ã¨å›è»¢ã‚’å–å¾—ã™ã‚‹
     const auto &p(layerData.RenderPose[eye].Position);
     const auto &o(layerData.RenderPose[eye].Orientation);
 #  else
-    // ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚É•`‰æ‚·‚é‘O‚ÉƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÌƒCƒ“ƒfƒbƒNƒX‚ğƒCƒ“ƒNƒŠƒƒ“ƒg‚·‚é
+    // ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«æç”»ã™ã‚‹å‰ã«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã™ã‚‹
     auto *const colorTexture(layerData.EyeFov.ColorTexture[eye]);
     colorTexture->CurrentIndex = (colorTexture->CurrentIndex + 1) % colorTexture->TextureCount;
     auto *const depthTexture(layerData.EyeFovDepth.DepthTexture[eye]);
     depthTexture->CurrentIndex = (depthTexture->CurrentIndex + 1) % depthTexture->TextureCount;
 
-    // ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğØ‚è‘Ö‚¦‚é
+    // ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
     glBindFramebuffer(GL_FRAMEBUFFER, oculusFbo[eye]);
     const auto &ctex(reinterpret_cast<ovrGLTexture *>(&colorTexture->Textures[colorTexture->CurrentIndex]));
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ctex->OGL.TexId, 0);
     const auto &dtex(reinterpret_cast<ovrGLTexture *>(&depthTexture->Textures[depthTexture->CurrentIndex]));
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, dtex->OGL.TexId, 0);
 
-    // ƒrƒ…[ƒ|[ƒg‚ğİ’è‚·‚é
+    // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹
     const auto &vp(layerData.EyeFov.Viewport[eye]);
     glViewport(vp.Pos.x, vp.Pos.y, vp.Size.w, vp.Size.h);
 
-    // Oculus Rift ‚Ì•Ğ–Ú‚ÌˆÊ’u‚Æ‰ñ“]‚ğæ“¾‚·‚é
+    // Oculus Rift ã®ç‰‡ç›®ã®ä½ç½®ã¨å›è»¢ã‚’å–å¾—ã™ã‚‹
     const auto &p(eyePose[eye].Position);
     const auto &o(eyePose[eye].Orientation);
 #  endif
 
-    // Oculus Rift ‚ÌƒXƒNƒŠ[ƒ“‚Ì‘å‚«‚³‚ğ•Ô‚·
+    // Oculus Rift ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®å¤§ãã•ã‚’è¿”ã™
     screen[0] = this->screen[eye][0];
     screen[1] = this->screen[eye][1];
     screen[2] = this->screen[eye][2];
     screen[3] = this->screen[eye][3];
 
-    // Oculus Rift ‚ÌˆÊ’u‚ğ”½“]‚µ‚Ä•Ô‚·
+    // Oculus Rift ã®ä½ç½®ã‚’åè»¢ã—ã¦è¿”ã™
     position[0] = -p.x;
     position[1] = -p.y;
     position[2] = -p.z;
     position[3] = 1.0f;
 
-    // Oculus Rift ‚Ì•ûŒü‚ğ”½“]‚µ‚Ä•Ô‚·
+    // Oculus Rift ã®æ–¹å‘ã‚’åè»¢ã—ã¦è¿”ã™
     orientation[0] = -o.x;
     orientation[1] = -o.y;
     orientation[2] = -o.z;
@@ -727,29 +727,29 @@ public:
   }
 
   //
-  // }Œ`‚Ì•`‰æ‚ğŠ®—¹‚·‚é
+  // å›³å½¢ã®æç”»ã‚’å®Œäº†ã™ã‚‹
   //
   void Window::commit(int eye)
   {
 #if OVR_PRODUCT_VERSION > 0
-    // GL_COLOR_ATTACHMENT0 ‚ÉŠ„‚è“–‚Ä‚ç‚ê‚½ƒeƒNƒXƒ`ƒƒ‚ª wglDXUnlockObjectsNV() ‚É‚æ‚Á‚Ä
-    // ƒAƒ“ƒƒbƒN‚³‚ê‚é‚½‚ß‚ÉŸ‚ÌƒtƒŒ[ƒ€‚Ìˆ—‚É‚¨‚¢‚Ä–³Œø‚È GL_COLOR_ATTACHMENT0 ‚ª
-    // FBO ‚ÉŒ‹‡‚³‚ê‚é‚Ì‚ğ”ğ‚¯‚é
+    // GL_COLOR_ATTACHMENT0 ã«å‰²ã‚Šå½“ã¦ã‚‰ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ãŒ wglDXUnlockObjectsNV() ã«ã‚ˆã£ã¦
+    // ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã•ã‚Œã‚‹ãŸã‚ã«æ¬¡ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®å‡¦ç†ã«ãŠã„ã¦ç„¡åŠ¹ãª GL_COLOR_ATTACHMENT0 ãŒ
+    // FBO ã«çµåˆã•ã‚Œã‚‹ã®ã‚’é¿ã‘ã‚‹
     glBindFramebuffer(GL_FRAMEBUFFER, oculusFbo[eye]);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, 0, 0);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0);
 
-    // •Û—¯’†‚Ì•ÏX‚ğ layerData.ColorTexture[eye] ‚É”½‰f‚µƒCƒ“ƒfƒbƒNƒX‚ğXV‚·‚é
+    // ä¿ç•™ä¸­ã®å¤‰æ›´ã‚’ layerData.ColorTexture[eye] ã«åæ˜ ã—ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’æ›´æ–°ã™ã‚‹
     ovr_CommitTextureSwapChain(session, layerData.ColorTexture[eye]);
 #endif
   }
 
   //
-  // Time Warp ˆ—‚Ég‚¤“Š‰e•ÏŠ·s—ñ‚Ì¬•ª‚Ìİ’è
+  // Time Warp å‡¦ç†ã«ä½¿ã†æŠ•å½±å¤‰æ›è¡Œåˆ—ã®æˆåˆ†ã®è¨­å®š
   //
   void timewarp(const GgMatrix &projection)
   {
-    // TimeWarp ‚Ég‚¤•ÏŠ·s—ñ‚Ì¬•ª‚ğİ’è‚·‚é
+    // TimeWarp ã«ä½¿ã†å¤‰æ›è¡Œåˆ—ã®æˆåˆ†ã‚’è¨­å®šã™ã‚‹
 #  if OVR_PRODUCT_VERSION < 1
     auto &posTimewarpProjectionDesc(layerData.EyeFovDepth.ProjectionDesc);
     posTimewarpProjectionDesc.Projection22 = (projection.get()[4 * 2 + 2] + projection.get()[4 * 3 + 2]) * 0.5f;
@@ -760,7 +760,7 @@ public:
 #endif
 
   //
-  // ƒEƒBƒ“ƒhƒE‚Ì¯•Êq‚Ìæ“¾
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è­˜åˆ¥å­ã®å–å¾—
   //
   GLFWwindow *get() const
   {
@@ -768,16 +768,16 @@ public:
   }
 
   //
-  // ƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚é‚×‚«‚©‚ğ”»’è‚·‚é
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹ã¹ãã‹ã‚’åˆ¤å®šã™ã‚‹
   //
   bool shouldClose()
   {
-    // ƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚é‚© ESC ƒL[‚ªƒ^ƒCƒv‚³‚ê‚Ä‚¢‚ê‚Î^‚ğ•Ô‚·
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹ã‹ ESC ã‚­ãƒ¼ãŒã‚¿ã‚¤ãƒ—ã•ã‚Œã¦ã„ã‚Œã°çœŸã‚’è¿”ã™
     return glfwWindowShouldClose(window) || glfwGetKey(window, GLFW_KEY_ESCAPE);
   }
 
   //
-  // ƒrƒ…[ƒ|[ƒg‚ğ‚à‚Æ‚É–ß‚·
+  // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’ã‚‚ã¨ã«æˆ»ã™
   //
   void restoreViewport()
   {
@@ -785,41 +785,41 @@ public:
   }
 
   //
-  // ƒJƒ‰[ƒoƒbƒtƒ@‚ğ“ü‚ê‘Ö‚¦‚ÄƒCƒxƒ“ƒg‚ğæ‚èo‚·
+  // ã‚«ãƒ©ãƒ¼ãƒãƒƒãƒ•ã‚¡ã‚’å…¥ã‚Œæ›¿ãˆã¦ã‚¤ãƒ™ãƒ³ãƒˆã‚’å–ã‚Šå‡ºã™
   //
   void swapBuffers()
   {
-    // ƒGƒ‰[ƒ`ƒFƒbƒN
+    // ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯
     ggError(__FILE__, __LINE__);
 
 #if defined(USE_OCULUS_RIFT)
 #  if OVR_PRODUCT_VERSION > 0
-    // •`‰æƒf[ƒ^‚ğ Oculus Rift ‚É“]‘—‚·‚é
+    // æç”»ãƒ‡ãƒ¼ã‚¿ã‚’ Oculus Rift ã«è»¢é€ã™ã‚‹
     const auto *const layers(&layerData.Header);
     if (OVR_FAILURE(ovr_SubmitFrame(session, frameIndex, nullptr, &layers, 1)))
 #  else
-    // Oculus Rift ã‚Ì•`‰æˆÊ’u‚ÆŠg‘å—¦‚ğ‹‚ß‚é
+    // Oculus Rift ä¸Šã®æç”»ä½ç½®ã¨æ‹¡å¤§ç‡ã‚’æ±‚ã‚ã‚‹
     ovrViewScaleDesc viewScaleDesc;
     viewScaleDesc.HmdSpaceToWorldScaleInMeters = 1.0f;
     viewScaleDesc.HmdToEyeViewOffset[0] = eyeRenderDesc[0].HmdToEyeViewOffset;
     viewScaleDesc.HmdToEyeViewOffset[1] = eyeRenderDesc[1].HmdToEyeViewOffset;
 
-    // •`‰æƒf[ƒ^‚ğXV‚·‚é
+    // æç”»ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
     layerData.EyeFov.RenderPose[0] = eyePose[0];
     layerData.EyeFov.RenderPose[1] = eyePose[1];
 
-    // •`‰æƒf[ƒ^‚ğ Oculus Rift ‚É“]‘—‚·‚é
+    // æç”»ãƒ‡ãƒ¼ã‚¿ã‚’ Oculus Rift ã«è»¢é€ã™ã‚‹
     const auto *const layers(&layerData.Header);
     if (OVR_FAILURE(ovr_SubmitFrame(session, 0, &viewScaleDesc, &layers, 1)))
 #  endif
     {
-      // “]‘—‚É¸”s‚µ‚½‚ç Oculus Rift ‚Ìİ’è‚ğÅ‰‚©‚ç‚â‚è’¼‚·•K—v‚ª‚ ‚é‚ç‚µ‚¢
-      // ‚¯‚Ç‚ß‚ñ‚Ç‚­‚³‚¢‚Ì‚ÅƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚Ä‚µ‚Ü‚¤
+      // è»¢é€ã«å¤±æ•—ã—ãŸã‚‰ Oculus Rift ã®è¨­å®šã‚’æœ€åˆã‹ã‚‰ã‚„ã‚Šç›´ã™å¿…è¦ãŒã‚ã‚‹ã‚‰ã—ã„
+      // ã‘ã©ã‚ã‚“ã©ãã•ã„ã®ã§ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã¦ã—ã¾ã†
       NOTIFY("Oculus Rift has been disconnected");
       glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
 
-    // ƒŒƒ“ƒ_ƒŠƒ“ƒOŒ‹‰Ê‚ğƒ~ƒ‰[•\¦—p‚ÌƒtƒŒ[ƒ€ƒoƒbƒtƒ@‚É‚à“]‘—‚·‚é
+    // ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°çµæœã‚’ãƒŸãƒ©ãƒ¼è¡¨ç¤ºç”¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã«ã‚‚è»¢é€ã™ã‚‹
     glBindFramebuffer(GL_READ_FRAMEBUFFER, mirrorFbo);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 #  if OVR_PRODUCT_VERSION > 0
@@ -831,65 +831,65 @@ public:
     glBlitFramebuffer(0, h, w, 0, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
     glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
 
-    // c‚Á‚Ä‚¢‚é OpenGL ƒRƒ}ƒ“ƒh‚ğÀs‚·‚é
+    // æ®‹ã£ã¦ã„ã‚‹ OpenGL ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹
     glFlush();
 #else
-    // ƒJƒ‰[ƒoƒbƒtƒ@‚ğ“ü‚ê‘Ö‚¦‚é
+    // ã‚«ãƒ©ãƒ¼ãƒãƒƒãƒ•ã‚¡ã‚’å…¥ã‚Œæ›¿ãˆã‚‹
     glfwSwapBuffers(window);
 #endif
 
-    // ƒVƒtƒgƒL[‚ÆƒRƒ“ƒgƒ[ƒ‹ƒL[‚Ìó‘Ô‚ğƒŠƒZƒbƒg‚·‚é
+    // ã‚·ãƒ•ãƒˆã‚­ãƒ¼ã¨ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚­ãƒ¼ã®çŠ¶æ…‹ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
     shift_key = control_key = false;
 
-    // ƒCƒxƒ“ƒg‚ğæ‚èo‚·
+    // ã‚¤ãƒ™ãƒ³ãƒˆã‚’å–ã‚Šå‡ºã™
     glfwPollEvents();
 
-    // ƒ}ƒEƒX‚ÌˆÊ’u‚ğ’²‚×‚é
+    // ãƒã‚¦ã‚¹ã®ä½ç½®ã‚’èª¿ã¹ã‚‹
     glfwGetCursorPos(window, &mouse_x, &mouse_y);
     const GLfloat x(static_cast<GLfloat>(mouse_x));
     const GLfloat y(static_cast<GLfloat>(mouse_y));
 
-    // ¶ƒ{ƒ^ƒ“ƒhƒ‰ƒbƒO
+    // å·¦ãƒœã‚¿ãƒ³ãƒ‰ãƒ©ãƒƒã‚°
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1)) trackball_left.motion(x, y);
 
-    // ‰Eƒ{ƒ^ƒ“ƒhƒ‰ƒbƒO
+    // å³ãƒœã‚¿ãƒ³ãƒ‰ãƒ©ãƒƒã‚°
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_2)) trackball_right.motion(x, y);
   }
 
   //
-  // ƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY•ÏX‚Ìˆ—
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºå¤‰æ›´æ™‚ã®å‡¦ç†
   //
   static void resize(GLFWwindow *window, int width, int height)
   {
-    // ‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ì this ƒ|ƒCƒ“ƒ^‚ğ“¾‚é
+    // ã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã® this ãƒã‚¤ãƒ³ã‚¿ã‚’å¾—ã‚‹
     Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
     if (instance)
     {
-      // ƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY‚ğ•Û‘¶‚·‚é
+      // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºã‚’ä¿å­˜ã™ã‚‹
       instance->width = width;
       instance->height = height;
 
-      // ƒgƒ‰ƒbƒNƒ{[ƒ‹ˆ—‚Ì”ÍˆÍ‚ğİ’è‚·‚é
+      // ãƒˆãƒ©ãƒƒã‚¯ãƒœãƒ¼ãƒ«å‡¦ç†ã®ç¯„å›²ã‚’è¨­å®šã™ã‚‹
       instance->trackball_left.region(width, height);
       instance->trackball_right.region(width, height);
 
 #if !defined(USE_OCULUS_RIFT)
-      // ƒEƒBƒ“ƒhƒE‚ÌƒAƒXƒyƒNƒg”ä‚ğ•Û‘¶‚·‚é
+      // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ã‚’ä¿å­˜ã™ã‚‹
       instance->aspect = static_cast<GLfloat>(width) / static_cast<GLfloat>(height);
 
-      // ƒEƒBƒ“ƒhƒE‘S‘Ì‚É•`‰æ‚·‚é
+      // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å…¨ä½“ã«æç”»ã™ã‚‹
       instance->restoreViewport();
 #endif
     }
   }
 
   //
-  // ƒL[ƒ{[ƒh‚ğƒ^ƒCƒv‚µ‚½‚Ìˆ—
+  // ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚’ã‚¿ã‚¤ãƒ—ã—ãŸæ™‚ã®å‡¦ç†
   //
   static void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods)
   {
-    // ‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ì this ƒ|ƒCƒ“ƒ^‚ğ“¾‚é
+    // ã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã® this ãƒã‚¤ãƒ³ã‚¿ã‚’å¾—ã‚‹
     Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
     if (instance)
@@ -899,18 +899,18 @@ public:
         switch (key)
         {
         case GLFW_KEY_R:
-          // ƒ}ƒEƒXƒzƒC[ƒ‹‚Ì‰ñ“]—Ê‚ğƒŠƒZƒbƒg‚·‚é
+          // ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
           instance->wheel_rotation = 0.0;
           instance->shift_wheel_rotation = 0.0;
           instance->control_wheel_rotation = 0.0;
 
-          // –îˆóƒL[‚Ìİ’è’l‚ğƒŠƒZƒbƒg‚·‚é
+          // çŸ¢å°ã‚­ãƒ¼ã®è¨­å®šå€¤ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
           instance->arrow[0] = instance->arrow[1] = 0;
           instance->shift_arrow[0] = instance->shift_arrow[1] = 0;
           instance->control_arrow[0] = instance->control_arrow[1] = 0;
 
         case GLFW_KEY_O:
-          // ƒgƒ‰ƒbƒNƒ{[ƒ‹‚ğƒŠƒZƒbƒg‚·‚é
+          // ãƒˆãƒ©ãƒƒã‚¯ãƒœãƒ¼ãƒ«ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
           instance->trackball_left.reset();
           instance->trackball_right.reset();
           break;
@@ -976,16 +976,16 @@ public:
   }
 
   //
-  // ƒ}ƒEƒXƒ{ƒ^ƒ“‚ğ‘€ì‚µ‚½‚Æ‚«‚Ìˆ—
+  // ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³ã‚’æ“ä½œã—ãŸã¨ãã®å‡¦ç†
   //
   static void mouse(GLFWwindow *window, int button, int action, int mods)
   {
-    // ‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ì this ƒ|ƒCƒ“ƒ^‚ğ“¾‚é
+    // ã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã® this ãƒã‚¤ãƒ³ã‚¿ã‚’å¾—ã‚‹
     Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
     if (instance)
     {
-      // ƒ}ƒEƒX‚ÌŒ»İˆÊ’u‚ğ“¾‚é
+      // ãƒã‚¦ã‚¹ã®ç¾åœ¨ä½ç½®ã‚’å¾—ã‚‹
       const GLfloat x(static_cast<GLfloat>(instance->mouse_x));
       const GLfloat y(static_cast<GLfloat>(instance->mouse_y));
 
@@ -994,12 +994,12 @@ public:
       case GLFW_MOUSE_BUTTON_1:
         if (action)
         {
-          // ¶ƒhƒ‰ƒbƒOŠJn
+          // å·¦ãƒ‰ãƒ©ãƒƒã‚°é–‹å§‹
           instance->trackball_left.start(x, y);
         }
         else
         {
-          // ¶ƒhƒ‰ƒbƒOI—¹
+          // å·¦ãƒ‰ãƒ©ãƒƒã‚°çµ‚äº†
           instance->trackball_left.stop(x, y);
         }
         break;
@@ -1007,12 +1007,12 @@ public:
       case GLFW_MOUSE_BUTTON_2:
         if (action)
         {
-          // ‰Eƒhƒ‰ƒbƒOŠJn
+          // å³ãƒ‰ãƒ©ãƒƒã‚°é–‹å§‹
           instance->trackball_right.start(x, y);
         }
         else
         {
-          // ‰Eƒhƒ‰ƒbƒOI—¹
+          // å³ãƒ‰ãƒ©ãƒƒã‚°çµ‚äº†
           instance->trackball_right.stop(x, y);
         }
         break;
@@ -1027,11 +1027,11 @@ public:
   }
 
   //
-  // ƒ}ƒEƒXƒzƒC[ƒ‹‚ğ‘€ì‚µ‚½‚Ìˆ—
+  // ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã‚’æ“ä½œã—ãŸæ™‚ã®å‡¦ç†
   //
   static void wheel(GLFWwindow *window, double x, double y)
   {
-    // ‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ì this ƒ|ƒCƒ“ƒ^‚ğ“¾‚é
+    // ã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã® this ãƒã‚¤ãƒ³ã‚¿ã‚’å¾—ã‚‹
     Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
     if (instance)
@@ -1052,7 +1052,7 @@ public:
   }
 
   //
-  // ƒEƒBƒ“ƒhƒE‚Ì•‚ğ“¾‚é
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¹…ã‚’å¾—ã‚‹
   //
   GLsizei getWidth() const
   {
@@ -1060,7 +1060,7 @@ public:
   }
 
   //
-  // ƒEƒBƒ“ƒhƒE‚Ì‚‚³‚ğ“¾‚é
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®é«˜ã•ã‚’å¾—ã‚‹
   //
   GLsizei getHeight() const
   {
@@ -1068,7 +1068,7 @@ public:
   }
 
   //
-  // ƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY‚ğ“¾‚é
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºã‚’å¾—ã‚‹
   //
   void getSize(GLsizei *size) const
   {
@@ -1077,7 +1077,7 @@ public:
   }
 
   //
-  // ƒEƒBƒ“ƒhƒE‚ÌƒAƒXƒyƒNƒg”ä‚ğ“¾‚é
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ã‚’å¾—ã‚‹
   //
   GLfloat getAspect() const
   {
@@ -1085,7 +1085,7 @@ public:
   }
 
   //
-  // –îˆóƒL[‚ÌŒ»İ‚Ì X ’l‚ğ“¾‚é
+  // çŸ¢å°ã‚­ãƒ¼ã®ç¾åœ¨ã® X å€¤ã‚’å¾—ã‚‹
   //
   GLfloat getArrowX() const
   {
@@ -1093,7 +1093,7 @@ public:
   }
 
   //
-  // –îˆóƒL[‚ÌŒ»İ‚Ì Y ’l‚ğ“¾‚é
+  // çŸ¢å°ã‚­ãƒ¼ã®ç¾åœ¨ã® Y å€¤ã‚’å¾—ã‚‹
   //
   GLfloat getArrowY() const
   {
@@ -1101,7 +1101,7 @@ public:
   }
 
   //
-  // –îˆóƒL[‚ÌŒ»İ‚Ì’l‚ğ“¾‚é
+  // çŸ¢å°ã‚­ãƒ¼ã®ç¾åœ¨ã®å€¤ã‚’å¾—ã‚‹
   //
   void getArrow(GLfloat *arrow) const
   {
@@ -1110,7 +1110,7 @@ public:
   }
 
   //
-  // ƒVƒtƒgƒL[‚ğ‰Ÿ‚µ‚È‚ª‚ç–îˆóƒL[‚ÌŒ»İ‚Ì X ’l‚ğ“¾‚é
+  // ã‚·ãƒ•ãƒˆã‚­ãƒ¼ã‚’æŠ¼ã—ãªãŒã‚‰çŸ¢å°ã‚­ãƒ¼ã®ç¾åœ¨ã® X å€¤ã‚’å¾—ã‚‹
   //
   GLfloat getShiftArrowX() const
   {
@@ -1118,7 +1118,7 @@ public:
   }
 
   //
-  // ƒVƒtƒgƒL[‚ğ‰Ÿ‚µ‚È‚ª‚ç–îˆóƒL[‚ÌŒ»İ‚Ì Y ’l‚ğ“¾‚é
+  // ã‚·ãƒ•ãƒˆã‚­ãƒ¼ã‚’æŠ¼ã—ãªãŒã‚‰çŸ¢å°ã‚­ãƒ¼ã®ç¾åœ¨ã® Y å€¤ã‚’å¾—ã‚‹
   //
   GLfloat getShiftArrowY() const
   {
@@ -1126,7 +1126,7 @@ public:
   }
 
   //
-  // ƒVƒtƒgƒL[‚ğ‰Ÿ‚µ‚È‚ª‚ç–îˆóƒL[‚ÌŒ»İ‚Ì’l‚ğ“¾‚é
+  // ã‚·ãƒ•ãƒˆã‚­ãƒ¼ã‚’æŠ¼ã—ãªãŒã‚‰çŸ¢å°ã‚­ãƒ¼ã®ç¾åœ¨ã®å€¤ã‚’å¾—ã‚‹
   //
   void getShiftArrow(GLfloat *shift_arrow) const
   {
@@ -1135,7 +1135,7 @@ public:
   }
 
   //
-  // ƒRƒ“ƒgƒ[ƒ‹ƒL[‚ğ‰Ÿ‚µ‚È‚ª‚ç–îˆóƒL[‚ÌŒ»İ‚Ì X ’l‚ğ“¾‚é
+  // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚­ãƒ¼ã‚’æŠ¼ã—ãªãŒã‚‰çŸ¢å°ã‚­ãƒ¼ã®ç¾åœ¨ã® X å€¤ã‚’å¾—ã‚‹
   //
   GLfloat getControlArrowX() const
   {
@@ -1143,7 +1143,7 @@ public:
   }
 
   //
-  // ƒRƒ“ƒgƒ[ƒ‹ƒL[‚ğ‰Ÿ‚µ‚È‚ª‚ç–îˆóƒL[‚ÌŒ»İ‚Ì Y ’l‚ğ“¾‚é
+  // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚­ãƒ¼ã‚’æŠ¼ã—ãªãŒã‚‰çŸ¢å°ã‚­ãƒ¼ã®ç¾åœ¨ã® Y å€¤ã‚’å¾—ã‚‹
   //
   GLfloat getControlArrowY() const
   {
@@ -1151,7 +1151,7 @@ public:
   }
 
   //
-  // ƒRƒ“ƒgƒ[ƒ‹ƒL[‚ğ‰Ÿ‚µ‚È‚ª‚ç–îˆóƒL[‚ÌŒ»İ‚Ì’l‚ğ“¾‚é
+  // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚­ãƒ¼ã‚’æŠ¼ã—ãªãŒã‚‰çŸ¢å°ã‚­ãƒ¼ã®ç¾åœ¨ã®å€¤ã‚’å¾—ã‚‹
   //
   void getControlArrow(GLfloat *control_arrow) const
   {
@@ -1160,7 +1160,7 @@ public:
   }
 
   //
-  // ƒ}ƒEƒX‚Ì X À•W‚ğ“¾‚é
+  // ãƒã‚¦ã‚¹ã® X åº§æ¨™ã‚’å¾—ã‚‹
   //
   GLfloat getMouseX() const
   {
@@ -1168,7 +1168,7 @@ public:
   }
 
   //
-  // ƒ}ƒEƒX‚Ì Y À•W‚ğ“¾‚é
+  // ãƒã‚¦ã‚¹ã® Y åº§æ¨™ã‚’å¾—ã‚‹
   //
   GLfloat getMouseY() const
   {
@@ -1176,7 +1176,7 @@ public:
   }
 
   //
-  // ƒ}ƒEƒX‚ÌŒ»İˆÊ’u‚ğ“¾‚é
+  // ãƒã‚¦ã‚¹ã®ç¾åœ¨ä½ç½®ã‚’å¾—ã‚‹
   //
   void getMouse(GLfloat *position) const
   {
@@ -1185,7 +1185,7 @@ public:
   }
 
   //
-  // ƒ}ƒEƒXƒzƒC[ƒ‹‚ÌŒ»İ‚Ì‰ñ“]Šp‚ğ“¾‚é
+  // ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®ç¾åœ¨ã®å›è»¢è§’ã‚’å¾—ã‚‹
   //
   GLfloat getWheel() const
   {
@@ -1193,7 +1193,7 @@ public:
   }
 
   //
-  // ƒVƒtƒg‚ğ‰Ÿ‚µ‚È‚ª‚çƒ}ƒEƒXƒzƒC[ƒ‹‚ÌŒ»İ‚Ì‰ñ“]Šp‚ğ“¾‚é
+  // ã‚·ãƒ•ãƒˆã‚’æŠ¼ã—ãªãŒã‚‰ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®ç¾åœ¨ã®å›è»¢è§’ã‚’å¾—ã‚‹
   //
   GLfloat getShiftWheel() const
   {
@@ -1201,7 +1201,7 @@ public:
   }
 
   //
-  // ƒRƒ“ƒgƒ[ƒ‹‚ğ‰Ÿ‚µ‚È‚ª‚çƒ}ƒEƒXƒzƒC[ƒ‹‚ÌŒ»İ‚Ì‰ñ“]Šp‚ğ“¾‚é
+  // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚’æŠ¼ã—ãªãŒã‚‰ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®ç¾åœ¨ã®å›è»¢è§’ã‚’å¾—ã‚‹
   //
   GLfloat getControlWheel() const
   {
@@ -1209,7 +1209,7 @@ public:
   }
 
   //
-  // ¶ƒ{ƒ^ƒ“‚É‚æ‚éƒgƒ‰ƒbƒNƒ{[ƒ‹‚Ì‰ñ“]•ÏŠ·s—ñ‚ğ“¾‚é
+  // å·¦ãƒœã‚¿ãƒ³ã«ã‚ˆã‚‹ãƒˆãƒ©ãƒƒã‚¯ãƒœãƒ¼ãƒ«ã®å›è»¢å¤‰æ›è¡Œåˆ—ã‚’å¾—ã‚‹
   //
   const GgMatrix getLeftTrackball() const
   {
@@ -1217,7 +1217,7 @@ public:
   }
 
   //
-  // ‰Eƒ{ƒ^ƒ“‚É‚æ‚éƒgƒ‰ƒbƒNƒ{[ƒ‹‚Ì‰ñ“]•ÏŠ·s—ñ‚ğ“¾‚é
+  // å³ãƒœã‚¿ãƒ³ã«ã‚ˆã‚‹ãƒˆãƒ©ãƒƒã‚¯ãƒœãƒ¼ãƒ«ã®å›è»¢å¤‰æ›è¡Œåˆ—ã‚’å¾—ã‚‹
   //
   const GgMatrix getRightTrackball() const
   {
