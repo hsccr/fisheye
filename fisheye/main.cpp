@@ -19,7 +19,7 @@
 // 배경 이미지를 배포하는 방법 (ExpansionShader.h 참조)
 // constexpr int shader_selection (6); // Kodak SP360 4K
 // constexpr int shader_selection (7); // THETA S의 Dual Fisheye 이미지
-constexpr int shader_selection (5); // THETA S의 Equirectangular 이미지
+constexpr int shader_selection (0); // THETA S의 Equirectangular 이미지
 
 // 배경 이미지 배포에 사용되는 버텍스 쉐이더 소스 파일 이름
 const char * const capture_vsrc (shader_type [shader_selection] .vsrc);
