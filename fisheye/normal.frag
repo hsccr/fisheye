@@ -2,20 +2,20 @@
 #extension GL_ARB_explicit_attrib_location : enable
 
 //
-// テクスチャ座標の位置の画素色をそのまま使う
+// 텍스처 좌표 위치의 화소 색상을 그대로 사용
 //
 
-// 背景テクスチャ
+// 배경 텍스처
 uniform sampler2D image;
 
-// テクスチャ座標
+// 텍스처 좌표
 in vec2 texcoord;
 
-// フラグメントの色
+// 조각의 색
 layout (location = 0) out vec4 fc;
 
 void main(void)
 {
-  // 画素の陰影を求める
+  // 픽셀의 음영을 요구
   fc = texture(image, texcoord);
 }
