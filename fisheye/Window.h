@@ -197,7 +197,7 @@ public:
   //
   // 생성자
   //
-  Window(const char *title = "GLFW Window", int width = 640, int height = 480,
+  Window(const char *title = "GLFW Window", int width = 1920, int height = 1080,
     int fullscreen = 0, GLFWwindow *share = nullptr)
     : window(nullptr)
   {
