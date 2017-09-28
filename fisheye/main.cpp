@@ -4,8 +4,15 @@
 // 평면 배포 설정 목록
 #include "ExpansionShader.h"
 
-// OpenCV 의한 비디오 캡처
-#include "CamCv.h"
+#define IMAGE_TEST 1
+
+#if defined(IMAGE_TEST)
+  // OpenCV
+  #include <opencv2/highgui/highgui.hpp>
+#else
+  // OpenCV 의한 비디오 캡처
+  #include "CamCv.h"
+#endif
 
 //
 // 설정
@@ -49,6 +56,11 @@ constexpr GLfloat background [] = {0.0f, 0.0f, 0.0f, 0.0f};
 
 int main ()
 {
+#if defined(IMAGE_TEST)
+  cv::Mat fisheye_image;
+
+  fisheye_image = cv::imread ("fisheye.jpg");
+#else
   // 카메라 사용하기
   CamCv camera;
   if (! camera.open (CAPTURE_INPUT, capture_width, capture_height, capture_fps))
@@ -57,6 +69,7 @@ int main ()
     return EXIT_FAILURE;
   }
   camera.start ();
+#endif
 
   // 창을 만들
   Window window;
@@ -91,7 +104,11 @@ int main ()
   // GL_CLAMP_TO_BORDER에두면 질감의 외부가 GL_TEXTURE_BORDER_COLOR되기 때문에, 이것이 배경색된다.
   const GLuint image ([] () {GLuint image; glGenTextures (1, & image); return image;} ());
   glBindTexture (GL_TEXTURE_2D, image);
+#if defined(IMAGE_TEST)
+  glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, fisheye_image.cols, fisheye_image.rows, 0, GL_BGR, GL_UNSIGNED_BYTE, NULL);
+#else
   glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, camera.getWidth (), camera.getHeight (), 0, GL_BGR, GL_UNSIGNED_BYTE, NULL);
+#endif
   glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -158,7 +175,11 @@ int main ()
     // 캡처 한 이미지를 배경의 텍스처로 전송
     glActiveTexture (GL_TEXTURE0);
     glBindTexture (GL_TEXTURE_2D, image);
+#if defined(IMAGE_TEST)
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, fisheye_image.cols, fisheye_image.rows, GL_RGB, GL_UNSIGNED_BYTE, fisheye_image.data);
+#else
     camera.transmit ();
+#endif
 
     // 텍스처 유닛을 지정
     glUniform1i (imageLoc, 0);
