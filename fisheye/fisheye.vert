@@ -1,63 +1,63 @@
 #version 150 core
 
 //
-// 魚眼レンズ画像の平面展開
+// 어안 렌즈 이미지 평면 열기
 //
 
-// スクリーンの格子間隔
+// 스크린의 격자 간격
 uniform vec2 gap;
 
-// スクリーンの大きさと中心位置
+// 스크린의 크기와 중심 위치
 uniform vec4 screen;
 
-// スクリーンまでの焦点距離
+// 스크린까지의 초점 거리
 uniform float focal;
 
-// スクリーンを回転する変換行列
+// 화면을 회전 변환 행렬
 uniform mat4 rotation;
 
-// 背景テクスチャの半径と中心位置
+// 배경 텍스처의 반지름과 중심 위치
 uniform vec4 circle;
 
-// 背景テクスチャ
+// 배경 텍스처
 uniform sampler2D image;
 
-// 背景テクスチャのサイズ
+// 배경 텍스처 크기
 vec2 size = textureSize(image, 0);
 
-// 背景テクスチャのテクスチャ空間上のスケール
+// 배경 텍스처의 텍스처 공간상의 스케일
 vec2 scale = vec2(0.5 * size.y / size.x, -0.5) / circle.st;
 
-// 背景テクスチャのテクスチャ空間上の中心位置
+// 배경 텍스처의 텍스처 공간의 중심 위치
 vec2 center = circle.pq + 0.5;
 
-// テクスチャ座標
+// 텍스처 좌표
 out vec2 texcoord;
 
 void main(void)
 {
-  // 頂点位置
-  //   各頂点において gl_VertexID が 0, 1, 2, 3, ... のように割り当てられるから、
-  //     x = gl_VertexID >> 1      = 0, 0, 1, 1, 2, 2, 3, 3, ...
-  //     y = 1 - (gl_VertexID & 1) = 1, 0, 1, 0, 1, 0, 1, 0, ...
-  //   のように GL_TRIANGLE_STRIP 向けの頂点座標値が得られる。
-  //   y に gl_InstaceID を足せば glDrawArrayInstanced() のインスタンスごとに y が変化する。
-  //   これに格子の間隔 gap をかけて 1 を引けば縦横 [-1, 1] の範囲の点群 position が得られる。
+   // 정점 위치
+  // 각 정점에서 gl_VertexID가 0, 1, 2, 3, ...과 같이 지정되기 때문에,
+  // x = gl_VertexID >> 1 = 0, 0, 1, 1, 2, 2, 3, 3, ...
+  // y = 1 - (gl_VertexID & 1) = 1, 0, 1, 0, 1, 0, 1, 0, ...
+  //처럼 GL_TRIANGLE_STRIP위한 정점 좌표 값을 얻을 수있다.
+  // y에 gl_InstaceID을 더하면 glDrawArrayInstanced ()의 인스턴스마다 y가 변화한다.
+  // 여기에 격자 간격 gap을 들여 1을 빼면 화면 [-1, 1] 범위의 점군 position이 얻어진다.
   int x = gl_VertexID >> 1;
   int y = gl_InstanceID + 1 - (gl_VertexID & 1);
   vec2 position = vec2(x, y) * gap - 1.0;
 
-  // 頂点位置をそのままラスタライザに送ればクリッピング空間全面に描く
+  // 정점 위치를 그대로 래스터 라이저에 보내면 클리핑 공간 전면 그릴
   gl_Position = vec4(position, 0.0, 1.0);
 
-  // 視線ベクトル
-  //   position にスクリーンの大きさ screen.st をかけて中心位置 screen.pq を足せば、
-  //   スクリーン上の点の位置 p が得られるから、原点にある視点からこの点に向かう視線は、
-  //   焦点距離 focal を Z 座標に用いて (p, -focal) となる。
-  //   これを回転したあと正規化して、その方向の視線単位ベクトルを得る。
+  // 시선 벡터
+  // position로 스크린의 크기 screen.st을 들여 중심 위치 screen.pq을 더하면
+  // 스크린상의 점의 위치 p가 얻을 수 있기 때문 원점의 관점에서이 점을 향하는 시선은
+  // 초점 거리 focal을 Z 좌표를 사용하여 (p, -focal)가된다.
+  // 이것을 회전 한 후 정규화하여 그 방향의 시선 단위 벡터를 얻는다.
   vec2 p = position * screen.st + screen.pq;
   vec4 vector = normalize(rotation * vec4(p, -focal, 0.0));
 
-  // テクスチャ座標
+  // 텍스처 좌표
   texcoord = acos(-vector.z) * normalize(vector.xy) * scale + center;
 }
