@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-** ゲームグラフィックス特論用補助プログラム GLFW3 版
+** 게임 그래픽 특론 보조 프로그램 GLFW3 판
 **
 
 Copyright (c) 2011-2017 Kohe Tokoi. All Rights Reserved.
@@ -25,11 +25,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **
 */
 
-// 補助プログラム
+// 보조 프로그램
 #include "gg.h"
 using namespace gg;
 
-// Oculus Rift SDK ライブラリ (LibOVR) の組み込み
+// Oculus Rift SDK 라이브러리 (LibOVR) 내장
 #if defined(USE_OCULUS_RIFT)
 #  if defined(_WIN32)
 #    define GLFW_EXPOSE_NATIVE_WIN32
@@ -48,7 +48,7 @@ using namespace gg;
 #    include <dxgi.h> // GetDefaultAdapterLuid のため
 #    pragma comment(lib, "dxgi.lib")
 
-// デフォルトのグラフィックスアダプタの LUID を得る
+// 기본 그래픽 어댑터 LUID를 얻을
 inline ovrGraphicsLuid GetDefaultAdapterLuid()
 {
   ovrGraphicsLuid luid = ovrGraphicsLuid();
@@ -76,7 +76,7 @@ inline ovrGraphicsLuid GetDefaultAdapterLuid()
   return luid;
 }
 
-// LUID を比較する
+// LUID 비교하기
 inline int Compare(const ovrGraphicsLuid& lhs, const ovrGraphicsLuid& rhs)
 {
   return memcmp(&lhs, &rhs, sizeof (ovrGraphicsLuid));
@@ -85,55 +85,55 @@ inline int Compare(const ovrGraphicsLuid& lhs, const ovrGraphicsLuid& rhs)
 #  endif
 #endif
 
-// 標準ライブラリ
+// 표준 라이브러리
 #include <cstdlib>
 #include <iostream>
 
 //
-// ウィンドウ関連の処理
+// 창 관련 작업
 //
 class Window
 {
-  // ウィンドウの識別子
+  // 윈도우의 식별자
   GLFWwindow *window;
 
-  // ビューポートの幅と高さ
+  // 뷰포트의 폭과 높이
   GLsizei width, height;
 
-  // ビューポートのアスペクト比
+  // 뷰포트의 종횡비
   GLfloat aspect;
 
-  // シフトキー
+  // Shift 키
   bool shift_key;
 
-  // コントロールキー
+  // 컨트롤 키
   bool control_key;
 
-  // 矢印キー
+  // 화살표 키
   int arrow[2];
 
-  // シフトキーを押しながら矢印キー
+  // Shift 키를 누른 상태에서 화살표 키
   int shift_arrow[2];
 
-  // コントロールキーを押しながら矢印キー
+  // 컨트롤 키를 누른 상태에서 화살표 키
   int control_arrow[2];
 
-  // マウスの現在位置
+  // 마우스의 현재 위치
   double mouse_x, mouse_y;
 
-  // マウスホイールの回転量
+  // 마우스 휠의 회 전량
   double wheel_rotation;
 
-  // シフトを押しながらマウスホイールの回転量
+  // 시프트를 누른 상태에서 마우스 휠의 회 전량
   double shift_wheel_rotation;
 
-  // コントロールを押しながらマウスホイールの回転量
+  // 컨트롤을 누른 상태에서 마우스 휠의 회 전량
   double control_wheel_rotation;
 
-  // 左ドラッグによるトラックボール
+  // 드래그에 의한 트랙볼
   GgTrackball trackball_left;
 
-  // 右ドラッグによるトラックボール
+  // 오른쪽 드래그하여 트랙볼
   GgTrackball trackball_right;
 
 #if defined(USE_OCULUS_RIFT)
@@ -141,93 +141,93 @@ class Window
   // Oculus Rift
   //
 
-  // Oculus Rift のセッション
+  // Oculus Rift 세션
   ovrSession session;
 
-  // Oculus Rift の状態
+  // Oculus Rift 상태
   ovrHmdDesc hmdDesc;
 
-  // Oculus Rift のスクリーンのサイズ
+  // Oculus Rift 화면 크기
   GLfloat screen[ovrEye_Count][4];
 
-  // Oculus Rift 表示用の FBO
+  // Oculus Rift 표시 용 FBO
   GLuint oculusFbo[ovrEye_Count];
 
-  // ミラー表示用の FBO
+  // 거울보기위한 FBO
   GLuint mirrorFbo;
 
 #  if OVR_PRODUCT_VERSION > 0
-  // Oculus Rift に送る描画データ
+  // Oculus Rift에 쓰기 그리기 데이터
   ovrLayerEyeFov layerData;
 
-  // Oculus Rift にレンダリングするフレームの番号
+  // Oculus Rift 렌더링 프레임 번호
   long long frameIndex;
 
-  // Oculus Rift 表示用の FBO のデプステクスチャ
+  // Oculus Rift 표시 용 FBO의 깊이 텍스처
   GLuint oculusDepth[ovrEye_Count];
 
-  // ミラー表示用の FBO のサイズ
+  // 거울보기위한 FBO의 크기
   int mirrorWidth, mirrorHeight;
 
-  // ミラー表示用の FBO のカラーテクスチャ
+  // 거울보기위한 FBO의 색상 질감
   ovrMirrorTexture mirrorTexture;
 #  else
-  // Oculus Rift に送る描画データ
+  // Oculus Rift에 쓰기 그리기 데이터
   ovrLayer_Union layerData;
 
-  // Oculus Rift のレンダリング情報
+  // Oculus Rift 렌더링 정보
   ovrEyeRenderDesc eyeRenderDesc[ovrEye_Count];
 
-  // Oculus Rift の視点情報
+  // Oculus Rift 관점 정보
   ovrPosef eyePose[ovrEye_Count];
 
-  // ミラー表示用の FBO のカラーテクスチャ
+  // 거울보기위한 FBO의 색상 질감
   ovrGLTexture *mirrorTexture;
 #  endif
 #endif
 
-  // コピーコンストラクタを封じる
+  // 복사 생성자를 봉쇄
   Window(const Window &w);
 
-  // 代入を封じる
+  // 대입을 봉쇄
   Window &operator=(const Window &w);
 
 public:
 
   //
-  // コンストラクタ
+  // 생성자
   //
   Window(const char *title = "GLFW Window", int width = 640, int height = 480,
     int fullscreen = 0, GLFWwindow *share = nullptr)
     : window(nullptr)
   {
-    // 初期化済なら true
+    // 초기화 된 경우 true
     static bool initialized(false);
 
-    // GLFW が初期化されていなければ
+    // GLFW가 초기화되어 있지 않으면
     if (!initialized)
     {
-      // GLFW を初期化する
+      // GLFW 초기화
       if (glfwInit() == GL_FALSE) return;
 
-      // プログラム終了時の処理を登録
+      // 프로그램 종료시 처리 등록
       atexit(glfwTerminate);
 
 #if defined(USE_OCULUS_RIFT)
-      // Oculus Rift (LibOVR) を初期化する
+      // Oculus Rift (LibOVR) 를 초기화
       if (OVR_FAILURE(ovr_Initialize(nullptr)))
       {
         NOTIFY("LibOVR can not be initialized");
         return;
       }
 
-      // プログラム終了時には LibOVR を終了する
+      // 프로그램 종료시에는 LibOVR 종료
       atexit(ovr_Shutdown);
 
-      // LUID は OpenGL では使っていないらしい
+      // LUID는 OpenGL에서 사용하지 않는 것
       ovrGraphicsLuid luid;
 
-      // Oculus Rift のセッションを作成する
+      // Oculus Rift 세션을 만들
       session = nullptr;
       if (OVR_FAILURE(ovr_Create(&session, &luid)))
       {
@@ -235,102 +235,102 @@ public:
         return;
       }
 
-      // Oculus Rift へのレンダリングに使う FBO の初期値を設定する
+      // Oculus Rift에 렌더링에 사용 FBO의 초기 값을 설정
       for (int eye = 0; eye < ovrEye_Count; ++eye) oculusFbo[eye] = 0;
 
-      // ミラー表示に使う FBO の初期値を設定する
+      // 거울 표시에 사용 FBO의 초기 값을 설정
       mirrorFbo = 0;
       mirrorTexture = nullptr;
 
 #  if OVR_PRODUCT_VERSION > 0
-      // デフォルトのグラフィックスアダプタが使われているか確かめる
+      // 기본 그래픽 어댑터를 사용하고 있는지 확인
       if (Compare(luid, GetDefaultAdapterLuid())) return;
 
-      // Asynchronous TimeWarp 処理に使うフレーム番号の初期値を設定する
+      // Asynchronous TimeWarp 처리에 사용하는 프레임 번호의 초기 값을 설정
       frameIndex = 0LL;
 
-      // Oculus Rift へのレンダリングに使う FBO のデプステクスチャの初期値を設定する
+      // Oculus Rift에 렌더링에 사용 FBO의 깊이 텍스처의 초기 값을 설정
       for (int eye = 0; eye < ovrEye_Count; ++eye) oculusDepth[eye] = 0;
 #  endif
 
-      // Oculus Rift ではダブルバッファリングしない
+      // Oculus Rift는 더블 버퍼링하지
       glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);
 
-      // Oculus Rift では SRGB でレンダリングする
+      // Oculus Rift로 렌더링
       glfwWindowHint(GLFW_SRGB_CAPABLE, GL_TRUE);
 #endif
 
-      // OpenGL Version 3.2 Core Profile を選択する
+      // OpenGL Version 3.2 Core Profile 을 선택
       glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
       glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
       glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
       glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-      // 矢印キーとマウス操作の初期値を設定する
+      // 화살표 키와 마우스 조작의 초기 값을 설정
       arrow[0] = arrow[1] = 0;
       shift_arrow[0] = shift_arrow[1] = 0;
       control_arrow[0] = control_arrow[1] = 0;
       wheel_rotation = shift_wheel_rotation = control_wheel_rotation = 0.0;
 
-      // 初期化済みの印をつける
+      // 초기화 된 표시한다
       initialized = true;
     }
 
-    // ディスプレイの情報
+    // 디스플레이 정보
     GLFWmonitor *monitor(nullptr);
 
-    // フルスクリーン表示
+    // 전체 화면
     if (fullscreen > 0)
     {
-      // 接続されているモニタの数を数える
+      // 연결되어있는 모니터의 수를 계산
       int mcount;
       GLFWmonitor **const monitors = glfwGetMonitors(&mcount);
 
-      // セカンダリモニタがあればそれを使う
+      // 보조 모니터가 있으면 그것을 사용
       if (fullscreen > mcount) fullscreen = mcount;
       monitor = monitors[fullscreen - 1];
 
-      // モニタのモードを調べる
+      // 모니터 모드를 조사
       const GLFWvidmode *mode(glfwGetVideoMode(monitor));
 
-      // ウィンドウのサイズをディスプレイのサイズにする
+      // 윈도우의 크기를 디스플레이의 크기가
       width = mode->width;
       height = mode->height;
     }
 
-    // GLFW のウィンドウを作成する
+    // GLFW 창을 만들
     window = glfwCreateWindow(width, height, title, monitor, share);
 
-    // ウィンドウが作成できなければ戻る
+    // 창을 만들 수 있어야 돌아 가기
     if (!window) return;
 
-    // 現在のウィンドウを処理対象にする
+    // 현재 윈도우를 처리 대상으로하는
     glfwMakeContextCurrent(window);
 
-    // ゲームグラフィックス特論の都合による初期化を行う
+    // 게임 그래픽 특론의 사정에 의한 초기화를 할
     ggInit();
 
-    // このインスタンスの this ポインタを記録しておく
+    // 이 인스턴스의 this 포인터를 기록해 두는
     glfwSetWindowUserPointer(window, this);
 
-    // キーボードを操作した時の処理を登録する
+    // 키보드를 조작했을 때의 처리를 등록하기
     glfwSetKeyCallback(window, keyboard);
 
-    // マウスボタンを操作したときの処理を登録する
+    // 마우스 버튼을 조작했을 때의 처리를 등록하기
     glfwSetMouseButtonCallback(window, mouse);
 
-    // マウスホイール操作時に呼び出す処理を登録する
+    // 마우스 휠 조작시 호출 처리를 등록하기
     glfwSetScrollCallback(window, wheel);
 
-    // ウィンドウのサイズ変更時に呼び出す処理を登録する
+    // 창 크기 변경시에 호출 처리를 등록하기
     glfwSetFramebufferSizeCallback(window, resize);
 
 #if defined(USE_OCULUS_RIFT)
-    // Oculus Rift の情報を取り出す
+    // Oculus Rift 정보를 추출
     hmdDesc = ovr_GetHmdDesc(session);
 
 #  if defined(_DEBUG)
-    // Oculus Rift の情報を表示する
+    // Oculus Rift 정보보기
     std::cerr
       << "\nProduct name: " << hmdDesc.ProductName
       << "\nResolution:   " << hmdDesc.Resolution.w << " x " << hmdDesc.Resolution.h
@@ -353,41 +353,41 @@ public:
       << ")\n" << std::endl;
 #  endif
 
-    // Oculus Rift に転送する描画データを作成する
+    // Oculus Rift에 전송하는 렌더링 데이터를 생성하는
 #  if OVR_PRODUCT_VERSION > 0
     layerData.Header.Type = ovrLayerType_EyeFov;
 #  else
     layerData.Header.Type = ovrLayerType_EyeFovDepth;
 #  endif
-    layerData.Header.Flags = ovrLayerFlag_TextureOriginAtBottomLeft;   // OpenGL なので左下が原点
+    layerData.Header.Flags = ovrLayerFlag_TextureOriginAtBottomLeft;   // OpenGL 이므로 왼쪽이 원점
 
-    // Oculus Rift 表示用の FBO を作成する
+    // Oculus Rift 표시 용의 FBO를 만들
     for (int eye = 0; eye < ovrEye_Count; ++eye)
     {
-      // Oculus Rift の視野を取得する
+      // Oculus Rift 시각을 얻을
       const auto &fov(hmdDesc.DefaultEyeFov[ovrEyeType(eye)]);
 
-      // Oculus Rift 表示用の FBO のサイズを求める
+      // Oculus Rift 표시 용 FBO의 크기를 요구
       const auto textureSize(ovr_GetFovTextureSize(session, ovrEyeType(eye), fov, 1.0f));
 
-      // Oculus Rift 表示用の FBO のアスペクト比を求める
+      // Oculus Rift 표시 용 FBO의 화면 비율을 요구
       aspect = static_cast<GLfloat>(textureSize.w) / static_cast<GLfloat>(textureSize.h);
 
-      // Oculus Rift のスクリーンのサイズを保存する
+      // Oculus Rift의 화면 크기를 저장
       screen[eye][0] = -fov.LeftTan;
       screen[eye][1] = fov.RightTan;
       screen[eye][2] = -fov.DownTan;
       screen[eye][3] = fov.UpTan;
 
 #  if OVR_PRODUCT_VERSION > 0
-      // 描画データに視野を設定する
+      // 그리기 데이터에 시각을 설정
       layerData.Fov[eye] = fov;
 
-      // 描画データにビューポートを設定する
+      // 그리기 데이터에 뷰포트를 설정
       layerData.Viewport[eye].Pos = OVR::Vector2i(0, 0);
       layerData.Viewport[eye].Size = textureSize;
 
-      // Oculus Rift 表示用の FBO のカラーバッファとして使うテクスチャセットの特性
+      // Oculus Rift 표시 용 FBO의 색상 버퍼로 사용할 텍스처 세트의 특성
       const ovrTextureSwapChainDesc colorDesc =
       {
         ovrTexture_2D,                    // Type
@@ -401,18 +401,18 @@ public:
         0, 0
       };
 
-      // Oculus Rift 表示用の FBO のレンダーターゲットとして使うテクスチャチェインを作成する
+      // Oculus Rift 표시 용 FBO 렌더 타겟으로 사용할 텍스처 체인을 만들
       layerData.ColorTexture[eye] = nullptr;
       if (OVR_SUCCESS(ovr_CreateTextureSwapChainGL(session, &colorDesc, &layerData.ColorTexture[eye])))
       {
-        // 作成したテクスチャチェインの長さを取得する
+        // 생성 한 텍스처 체인의 길이를 얻을
         int length(0);
         if (OVR_SUCCESS(ovr_GetTextureSwapChainLength(session, layerData.ColorTexture[eye], &length)))
         {
-          // テクスチャチェインの個々の要素について
+          // 텍스처 체인의 각 요소에 대해
           for (int i = 0; i < length; ++i)
           {
-            // テクスチャのパラメータを設定する
+            // 텍스처의 매개 변수를 설정
             GLuint texId;
             ovr_GetTextureSwapChainBufferGL(session, layerData.ColorTexture[eye], i, &texId);
             glBindTexture(GL_TEXTURE_2D, texId);
@@ -423,7 +423,7 @@ public:
           }
         }
 
-        // Oculus Rift 表示用の FBO のデプスバッファとして使うテクスチャを作成する
+        // Oculus Rift표시 용 FBO의 깊이 버퍼로 사용할 텍스처를 만들
         glGenTextures(1, &oculusDepth[eye]);
         glBindTexture(GL_TEXTURE_2D, oculusDepth[eye]);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, textureSize.w, textureSize.h, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
@@ -433,38 +433,38 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
       }
 #  else
-      // 描画データに視野を設定する
+      // 그리기 데이터에 시각을 설정
       layerData.EyeFov.Fov[eye] = fov;
 
-      // 描画データにビューポートを設定する
+      // 그리기 데이터에 뷰포트를 설정
       layerData.EyeFov.Viewport[eye].Pos = OVR::Vector2i(0, 0);
       layerData.EyeFov.Viewport[eye].Size = textureSize;
 
-      // Oculus Rift 表示用の FBO のカラーバッファとして使うテクスチャセットを作成する
+      // Oculus Rift 표시 용 FBO의 색상 버퍼로 사용할 텍스처 세트를 만들
       ovrSwapTextureSet *colorTexture;
       ovr_CreateSwapTextureSetGL(session, GL_SRGB8_ALPHA8, textureSize.w, textureSize.h, &colorTexture);
       layerData.EyeFov.ColorTexture[eye] = colorTexture;
 
-      // Oculus Rift 表示用の FBO のデプスバッファとして使うテクスチャセットを作成する
+      // Oculus Rift 표시 용 FBO의 깊이 버퍼로 사용할 텍스처 세트를 만들
       ovrSwapTextureSet *depthTexture;
       ovr_CreateSwapTextureSetGL(session, GL_DEPTH_COMPONENT32F, textureSize.w, textureSize.h, &depthTexture);
       layerData.EyeFovDepth.DepthTexture[eye] = depthTexture;
 
-      // Oculus Rift のレンズ補正等の設定値を取得する
+      // Oculus Rift 렌즈 보정 등의 설정 값을 얻을
       eyeRenderDesc[eye] = ovr_GetRenderDesc(session, ovrEyeType(eye), fov);
 #  endif
     }
 
 #  if OVR_PRODUCT_VERSION > 0
-    // 姿勢のトラッキングにおける原点を目の位置に設定する
-    // (原点を床の高さに設定するときは ovrTrackingOrigin_FloorLevel を指定する)
+    // 자세 추적의 원점을 눈 위치로 설정
+    // (원점 바닥의 높이로 설정하면 ovrTrackingOrigin_FloorLevel 지정)
     ovr_SetTrackingOriginType(session, ovrTrackingOrigin_EyeLevel);
 
-    // HMD の現在位置を基準にする
-    // (ovrTrackingOrigin_FloorLevel のときは高さはリセットされない)
+    // HMD의 현재 위치를 기준으로하는
+    // (ovrTrackingOrigin_FloorLevel의 경우 높이가 재설정되지 않음)
     ovr_RecenterTrackingOrigin(session);
 
-    // ミラー表示用の FBO を作成する
+    // 거울보기위한 FBO를 만들
     const ovrMirrorTextureDesc mirrorDesc =
     {
       OVR_FORMAT_R8G8B8A8_UNORM_SRGB,   // Format
@@ -473,14 +473,14 @@ public:
       0                                 // Flags
     };
 
-    // ミラー表示用の FBO のカラーバッファとして使うテクスチャを作成する
+    // 거울보기위한 FBO의 색상 버퍼로 사용할 텍스처를 만들
     if (OVR_SUCCESS(ovr_CreateMirrorTextureGL(session, &mirrorDesc, &mirrorTexture)))
     {
-      // 作成したテクスチャのテクスチャ名を得る
+      // 생성 한 텍스처의 텍스처 이름을 얻는다
       GLuint texId;
       if (OVR_SUCCESS(ovr_GetMirrorTextureBufferGL(session, mirrorTexture, &texId)))
       {
-        // 作成したテクスチャをミラー表示用の FBO にカラーバッファとして組み込む
+        // 생성 된 텍스처를 거울보기위한 FBO 색상 버퍼로 통합
         glGenFramebuffers(1, &mirrorFbo);
         glBindFramebuffer(GL_READ_FRAMEBUFFER, mirrorFbo);
         glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texId, 0);
@@ -489,7 +489,7 @@ public:
       }
     }
 #  else
-    // ミラー表示用の FBO を作成する
+    // 거울보기위한 FBO를 만들
     if (OVR_SUCCESS(ovr_CreateMirrorTextureGL(session, GL_SRGB8_ALPHA8, width, height, reinterpret_cast<ovrTexture **>(&mirrorTexture))))
     {
       glGenFramebuffers(1, &mirrorFbo);
@@ -500,36 +500,36 @@ public:
     }
 #  endif
 
-    // Oculus Rift のレンダリング用の FBO を作成する
+    // Oculus Rift 렌더링 용의 FBO를 만들
     glGenFramebuffers(ovrEye_Count, oculusFbo);
 
-    // Oculus Rift にレンダリングするときは sRGB カラースペースを使う
+    // Oculus Rift 렌더링 할 때 sRGB 색 공간을 사용
     glEnable(GL_FRAMEBUFFER_SRGB);
 
-    // Oculus Rift への表示ではスワップ間隔を待たない
+    // Oculus Rift에 표시는 스왑 간격을 기다리지 않는다
     glfwSwapInterval(0);
 #else
-    // スワップ間隔を待つ
+    // 스왑 간격을 기다리는
     glfwSwapInterval(1);
 #endif
 
-    // ビューポートと投影変換行列を初期化する
+    // 뷰포트와 투영 변환 행렬을 초기화하는
     resize(window, width, height);
   }
 
   //
-  // デストラクタ
+  // 소멸자
   //
   virtual ~Window()
   {
-    // ウィンドウが作成されていなければ戻る
+    // 윈도우가 생성되어 있지 않으면 돌아 가기
     if (!window) return;
 
 #if defined(USE_OCULUS_RIFT)
-    // ミラー表示用の FBO を削除する
+    // 거울보기위한 FBO를 제거
     if (mirrorFbo) glDeleteFramebuffers(1, &mirrorFbo);
 
-    // ミラー表示に使ったテクスチャを開放する
+    // 거울보기에 사용한 텍스처를 개방
     if (mirrorTexture)
     {
 #  if OVR_PRODUCT_VERSION > 0
@@ -540,25 +540,25 @@ public:
 #  endif
     }
 
-    // Oculus Rift のレンダリング用の FBO を削除する
+    // Oculus Rift 렌더링 용의 FBO를 제거
     glDeleteFramebuffers(ovrEye_Count, oculusFbo);
 
-    // Oculus Rift 表示用の FBO を削除する
+    // Oculus Rift 표시 용의 FBO를 제거
     for (int eye = 0; eye < ovrEye_Count; ++eye)
     {
 #  if OVR_PRODUCT_VERSION > 0
-      // レンダリングターゲットに使ったテクスチャを開放する
+      // 렌더링 타겟으로 사용한 텍스처를 개방
       if (layerData.ColorTexture[eye])
       {
         ovr_DestroyTextureSwapChain(session, layerData.ColorTexture[eye]);
         layerData.ColorTexture[eye] = nullptr;
       }
 
-      // デプスバッファとして使ったテクスチャを開放する
+      // 깊이 버퍼로 사용한 텍스처를 개방
       glDeleteTextures(1, &oculusDepth[eye]);
       oculusDepth[eye] = 0;
 #  else
-      // レンダリングターゲットに使ったテクスチャを開放する
+      // 렌더링 타겟으로 사용한 텍스처를 개방
       auto *const colorTexture(layerData.EyeFov.ColorTexture[eye]);
       for (int i = 0; i < colorTexture->TextureCount; ++i)
       {
@@ -567,7 +567,7 @@ public:
       }
       ovr_DestroySwapTextureSet(session, colorTexture);
 
-      // デプスバッファとして使ったテクスチャを開放する
+      // 깊이 버퍼로 사용한 텍스처를 개방
       auto *const depthTexture(layerData.EyeFovDepth.DepthTexture[eye]);
       for (int i = 0; i < depthTexture->TextureCount; ++i)
       {
@@ -578,76 +578,76 @@ public:
 #  endif
     }
 
-    // Oculus Rift のセッションを破棄する
+    // Oculus Rift 세션을 삭제
     ovr_Destroy(session);
     session = nullptr;
 #endif
 
-    // ウィンドウを破棄する
+    // 윈도우를 파기
     glfwDestroyWindow(window);
   }
 
 #if defined(USE_OCULUS_RIFT)
   //
-  // Oculus Rift による描画開始
+  // Oculus Rift 의한 그리기 시작
   //
   bool start()
   {
 #  if OVR_PRODUCT_VERSION > 0
-    // セッションの状態を取得する
+    // 세션의 상태를 얻을
     ovrSessionStatus sessionStatus;
     ovr_GetSessionStatus(session, &sessionStatus);
 
-    // アプリケーションが終了を要求しているときはウィンドウのクローズフラグを立てる
+    // 응용 프로그램이 종료를 요구하고있을 때는 창 닫기 플래그를
     if (sessionStatus.ShouldQuit) glfwSetWindowShouldClose(window, GL_TRUE);
 
-    // Oculus Rift に表示されていないときは戻る
+    // Oculus Rift에 표시되지 않을 때는 돌아 가기
     if (!sessionStatus.IsVisible) return false;
 
-    // 現在の状態をトラッキングの原点にする
+    // 현재 상태를 추적 원점으로하는
     if (sessionStatus.ShouldRecenter) ovr_RecenterTrackingOrigin(session);
 
-    // Oculus Remote の Back ボタンを押したら視点の位置をリセットする
+    // Oculus Remote의 Back 버튼을 누르면 시점의 위치를 ​​재설정
     ovrInputState inputState;
     if (OVR_SUCCESS(ovr_GetInputState(session, ovrControllerType_Remote, &inputState)))
     {
       if (inputState.Buttons & ovrButton_Back) ovr_RecenterTrackingOrigin(session);
     }
 
-    // HmdToEyeOffset などは実行時に変化するので毎フレーム ovr_GetRenderDesc() で ovrEyeRenderDesc を取得する
+    // HmdToEyeOffset 등은 실행시에 변화하기 때문에 매 프레임 ovr_GetRenderDesc ()에서 ovrEyeRenderDesc를 얻을
     const ovrEyeRenderDesc eyeRenderDesc[] =
     {
       ovr_GetRenderDesc(session, ovrEyeType(0), hmdDesc.DefaultEyeFov[0]),
       ovr_GetRenderDesc(session, ovrEyeType(1), hmdDesc.DefaultEyeFov[1])
     };
 
-    // Oculus Rift のスクリーンのヘッドトラッキング位置からの変位を取得する
+    // Oculus Rift 스크린의 헤드 트래킹 위치에서의 변위를 얻을
     const ovrVector3f hmdToEyeOffset[] =
     {
       eyeRenderDesc[0].HmdToEyeOffset,
       eyeRenderDesc[1].HmdToEyeOffset
     };
 
-    // 視点の姿勢情報を取得する
+    // 관점의 자세 정보를 얻을
     ovr_GetEyePoses(session, ++frameIndex, ovrTrue, hmdToEyeOffset, layerData.RenderPose, &layerData.SensorSampleTime);
 #  else
-    // フレームのタイミング計測開始
+    // 프레임의 타이밍 측정 시작
     const auto ftiming(ovr_GetPredictedDisplayTime(session, 0));
 
-    // sensorSampleTime の取得は可能な限り ovr_GetTrackingState() の近くで行う
+    // sensorSampleTime의 취득은 가능한 ovr_GetTrackingState () 근처에서 할
     layerData.EyeFov.SensorSampleTime = ovr_GetTimeInSeconds();
 
-    // ヘッドトラッキングの状態を取得する
+    // 헤드 트래킹 상태를 얻을
     const auto hmdState(ovr_GetTrackingState(session, ftiming, ovrTrue));
 
-    // Oculus Rift のスクリーンのヘッドトラッキング位置からの変位を取得する
+    // Oculus Rift 스크린의 헤드 트래킹 위치에서의 변위를 얻을
     const ovrVector3f hmdToEyeViewOffset[] =
     {
       eyeRenderDesc[0].HmdToEyeViewOffset,
       eyeRenderDesc[1].HmdToEyeViewOffset
     };
 
-    // 視点の姿勢情報を求める
+    // 관점의 자세 정보 요청
     ovr_CalcEyePoses(hmdState.HeadPose.ThePose, hmdToEyeViewOffset, eyePose);
 #  endif
 
@@ -655,71 +655,71 @@ public:
   }
 
   //
-  // Oculus Rift の描画する目の指定
+  // Oculus Rift의 그리기 눈 지정
   //
   void select(int eye, GLfloat *screen, GLfloat *position, GLfloat *orientation)
   {
 #  if OVR_PRODUCT_VERSION > 0
-    // Oculus Rift にレンダリングする FBO に切り替える
+    // Oculus Rift 렌더링 FBO로 전환
     if (layerData.ColorTexture[eye])
     {
-      // FBO のカラーバッファに使う現在のテクスチャのインデックスを取得する
+      // FBO의 색상 버퍼로 사용하는 현재의 텍스처 인덱스를 얻을
       int curIndex;
       ovr_GetTextureSwapChainCurrentIndex(session, layerData.ColorTexture[eye], &curIndex);
 
-      // FBO のカラーバッファに使うテクスチャを取得する
+      // FBO의 색상 버퍼로 사용할 텍스처를 얻을
       GLuint curTexId;
       ovr_GetTextureSwapChainBufferGL(session, layerData.ColorTexture[eye], curIndex, &curTexId);
 
-      // FBO を設定する
+      // FBO를 설정
       glBindFramebuffer(GL_FRAMEBUFFER, oculusFbo[eye]);
       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, curTexId, 0);
       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, oculusDepth[eye], 0);
 
-      // ビューポートを設定する
+      // 뷰포트를 설정
       const auto &vp(layerData.Viewport[eye]);
       glViewport(vp.Pos.x, vp.Pos.y, vp.Size.w, vp.Size.h);
     }
 
-    // Oculus Rift の片目の位置と回転を取得する
+    // Oculus Rift의 한쪽의 정도
     const auto &p(layerData.RenderPose[eye].Position);
     const auto &o(layerData.RenderPose[eye].Orientation);
 #  else
-    // レンダーターゲットに描画する前にレンダーターゲットのインデックスをインクリメントする
+    // 렌더 타겟에 그리기 전에 렌더 타겟의 인덱스를 증가
     auto *const colorTexture(layerData.EyeFov.ColorTexture[eye]);
     colorTexture->CurrentIndex = (colorTexture->CurrentIndex + 1) % colorTexture->TextureCount;
     auto *const depthTexture(layerData.EyeFovDepth.DepthTexture[eye]);
     depthTexture->CurrentIndex = (depthTexture->CurrentIndex + 1) % depthTexture->TextureCount;
 
-    // レンダーターゲットを切り替える
+    // 렌더 타겟을 전환
     glBindFramebuffer(GL_FRAMEBUFFER, oculusFbo[eye]);
     const auto &ctex(reinterpret_cast<ovrGLTexture *>(&colorTexture->Textures[colorTexture->CurrentIndex]));
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ctex->OGL.TexId, 0);
     const auto &dtex(reinterpret_cast<ovrGLTexture *>(&depthTexture->Textures[depthTexture->CurrentIndex]));
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, dtex->OGL.TexId, 0);
 
-    // ビューポートを設定する
+    // 뷰포트를 설정
     const auto &vp(layerData.EyeFov.Viewport[eye]);
     glViewport(vp.Pos.x, vp.Pos.y, vp.Size.w, vp.Size.h);
 
-    // Oculus Rift の片目の位置と回転を取得する
+    // Oculus Rift 한눈의 위치와 회전을 얻을
     const auto &p(eyePose[eye].Position);
     const auto &o(eyePose[eye].Orientation);
 #  endif
 
-    // Oculus Rift のスクリーンの大きさを返す
+    // Oculus Rift 스크린의 크기를 반환
     screen[0] = this->screen[eye][0];
     screen[1] = this->screen[eye][1];
     screen[2] = this->screen[eye][2];
     screen[3] = this->screen[eye][3];
 
-    // Oculus Rift の位置を反転して返す
+    // Oculus Rift 위치를 변경하여 반환
     position[0] = -p.x;
     position[1] = -p.y;
     position[2] = -p.z;
     position[3] = 1.0f;
 
-    // Oculus Rift の方向を反転して返す
+    // Oculus Rift 방향을 반전하여 반환
     orientation[0] = -o.x;
     orientation[1] = -o.y;
     orientation[2] = -o.z;
@@ -727,29 +727,29 @@ public:
   }
 
   //
-  // 図形の描画を完了する
+  // 도형 그리기를 완료
   //
   void Window::commit(int eye)
   {
 #if OVR_PRODUCT_VERSION > 0
-    // GL_COLOR_ATTACHMENT0 に割り当てられたテクスチャが wglDXUnlockObjectsNV() によって
-    // アンロックされるために次のフレームの処理において無効な GL_COLOR_ATTACHMENT0 が
-    // FBO に結合されるのを避ける
+    // GL_COLOR_ATTACHMENT0에 할당 된 텍스처가 wglDXUnlockObjectsNV ()에 의해
+    // 잠금 해제되기 위해서는 다음 프레임의 처리에서 잘못된 GL_COLOR_ATTACHMENT0가
+    // FBO에 결합되는 것을 피하기
     glBindFramebuffer(GL_FRAMEBUFFER, oculusFbo[eye]);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, 0, 0);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0);
 
-    // 保留中の変更を layerData.ColorTexture[eye] に反映しインデックスを更新する
+    // 보류중인 변경 내용을 layerData.ColorTexture [eye]에 반영 인덱스를 업데이트하는
     ovr_CommitTextureSwapChain(session, layerData.ColorTexture[eye]);
 #endif
   }
 
   //
-  // Time Warp 処理に使う投影変換行列の成分の設定
+  // Time Warp 처리에 사용하는 투영 변환 행렬의 성분의 설정
   //
   void timewarp(const GgMatrix &projection)
   {
-    // TimeWarp に使う変換行列の成分を設定する
+    // TimeWarp 사용 변환 행렬의 성분을 설정
 #  if OVR_PRODUCT_VERSION < 1
     auto &posTimewarpProjectionDesc(layerData.EyeFovDepth.ProjectionDesc);
     posTimewarpProjectionDesc.Projection22 = (projection.get()[4 * 2 + 2] + projection.get()[4 * 3 + 2]) * 0.5f;
@@ -760,7 +760,7 @@ public:
 #endif
 
   //
-  // ウィンドウの識別子の取得
+  // 윈도우의 식별자의 취득
   //
   GLFWwindow *get() const
   {
@@ -768,16 +768,16 @@ public:
   }
 
   //
-  // ウィンドウを閉じるべきかを判定する
+  // 창 닫기인지 여부를 판단
   //
   bool shouldClose()
   {
-    // ウィンドウを閉じるか ESC キーがタイプされていれば真を返す
+    // 창을 닫거나 ESC 키 타자가 있으면 true를 반환
     return glfwWindowShouldClose(window) || glfwGetKey(window, GLFW_KEY_ESCAPE);
   }
 
   //
-  // ビューポートをもとに戻す
+  // 뷰포트를 바탕으로 되 돌린다
   //
   void restoreViewport()
   {
@@ -785,41 +785,41 @@ public:
   }
 
   //
-  // カラーバッファを入れ替えてイベントを取り出す
+  // 컬러 버퍼를 교체하여 이벤트를 검색
   //
   void swapBuffers()
   {
-    // エラーチェック
+    // 오류 검사
     ggError(__FILE__, __LINE__);
 
 #if defined(USE_OCULUS_RIFT)
 #  if OVR_PRODUCT_VERSION > 0
-    // 描画データを Oculus Rift に転送する
+    // 그리기 데이터를 Oculus Rift로 전송
     const auto *const layers(&layerData.Header);
     if (OVR_FAILURE(ovr_SubmitFrame(session, frameIndex, nullptr, &layers, 1)))
 #  else
-    // Oculus Rift 上の描画位置と拡大率を求める
+    // Oculus Rift 위 드로잉 위치와 확대를 추구
     ovrViewScaleDesc viewScaleDesc;
     viewScaleDesc.HmdSpaceToWorldScaleInMeters = 1.0f;
     viewScaleDesc.HmdToEyeViewOffset[0] = eyeRenderDesc[0].HmdToEyeViewOffset;
     viewScaleDesc.HmdToEyeViewOffset[1] = eyeRenderDesc[1].HmdToEyeViewOffset;
 
-    // 描画データを更新する
+    // 그리기 데이터를 업데이트하는
     layerData.EyeFov.RenderPose[0] = eyePose[0];
     layerData.EyeFov.RenderPose[1] = eyePose[1];
 
-    // 描画データを Oculus Rift に転送する
+    // 그리기 데이터를 Oculus Rift로 전송
     const auto *const layers(&layerData.Header);
     if (OVR_FAILURE(ovr_SubmitFrame(session, 0, &viewScaleDesc, &layers, 1)))
 #  endif
     {
-      // 転送に失敗したら Oculus Rift の設定を最初からやり直す必要があるらしい
-      // けどめんどくさいのでウィンドウを閉じてしまう
+      // 전송에 실패하면 Oculus Rift 설정을 처음부터 다시 시작해야 할 것
+      // 하지만 귀찮은 때문에 창을 닫고 만다
       NOTIFY("Oculus Rift has been disconnected");
       glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
 
-    // レンダリング結果をミラー表示用のフレームバッファにも転送する
+    // 렌더링 결과를 거울보기위한 프레임 버퍼에 전송
     glBindFramebuffer(GL_READ_FRAMEBUFFER, mirrorFbo);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 #  if OVR_PRODUCT_VERSION > 0
@@ -831,65 +831,65 @@ public:
     glBlitFramebuffer(0, h, w, 0, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
     glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
 
-    // 残っている OpenGL コマンドを実行する
+    // 남아있는 OpenGL 명령을 실행
     glFlush();
 #else
-    // カラーバッファを入れ替える
+    // 컬러 버퍼를 교체
     glfwSwapBuffers(window);
 #endif
 
-    // シフトキーとコントロールキーの状態をリセットする
+    // Shift 키와 컨트롤 키의 상태를 재설정
     shift_key = control_key = false;
 
-    // イベントを取り出す
+    // 이벤트를 검색
     glfwPollEvents();
 
-    // マウスの位置を調べる
+    // 마우스의 위치를 결정
     glfwGetCursorPos(window, &mouse_x, &mouse_y);
     const GLfloat x(static_cast<GLfloat>(mouse_x));
     const GLfloat y(static_cast<GLfloat>(mouse_y));
 
-    // 左ボタンドラッグ
+    // 왼쪽 버튼 드래그
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1)) trackball_left.motion(x, y);
 
-    // 右ボタンドラッグ
+    // 오른쪽 버튼 드래그
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_2)) trackball_right.motion(x, y);
   }
 
   //
-  // ウィンドウのサイズ変更時の処理
+  // 창 크기 변경시의 처리
   //
   static void resize(GLFWwindow *window, int width, int height)
   {
-    // このインスタンスの this ポインタを得る
+    // 이 인스턴스의 this 포인터를 얻을
     Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
     if (instance)
     {
-      // ウィンドウのサイズを保存する
+      // 창의 크기를 저장
       instance->width = width;
       instance->height = height;
 
-      // トラックボール処理の範囲を設定する
+      // 트랙볼 처리의 범위를 설정하는
       instance->trackball_left.region(width, height);
       instance->trackball_right.region(width, height);
 
 #if !defined(USE_OCULUS_RIFT)
-      // ウィンドウのアスペクト比を保存する
+      // 윈도우의 화면 비율을 저장
       instance->aspect = static_cast<GLfloat>(width) / static_cast<GLfloat>(height);
 
-      // ウィンドウ全体に描画する
+      // 전체 창 그릴
       instance->restoreViewport();
 #endif
     }
   }
 
   //
-  // キーボードをタイプした時の処理
+  // 키보드를 입력했을 때의 처리
   //
   static void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods)
   {
-    // このインスタンスの this ポインタを得る
+    // 이 인스턴스의 this 포인터를 얻을
     Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
     if (instance)
@@ -899,18 +899,18 @@ public:
         switch (key)
         {
         case GLFW_KEY_R:
-          // マウスホイールの回転量をリセットする
+          // 마우스 휠의 회 전량을 재설정
           instance->wheel_rotation = 0.0;
           instance->shift_wheel_rotation = 0.0;
           instance->control_wheel_rotation = 0.0;
 
-          // 矢印キーの設定値をリセットする
+          // 화살표 키 설정을 재설정
           instance->arrow[0] = instance->arrow[1] = 0;
           instance->shift_arrow[0] = instance->shift_arrow[1] = 0;
           instance->control_arrow[0] = instance->control_arrow[1] = 0;
 
         case GLFW_KEY_O:
-          // トラックボールをリセットする
+          // 트랙볼을 재설정
           instance->trackball_left.reset();
           instance->trackball_right.reset();
           break;
@@ -976,16 +976,16 @@ public:
   }
 
   //
-  // マウスボタンを操作したときの処理
+  // 마우스 버튼을 조작했을 때의 처리
   //
   static void mouse(GLFWwindow *window, int button, int action, int mods)
   {
-    // このインスタンスの this ポインタを得る
+    // 이 인스턴스의 this 포인터를 얻을
     Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
     if (instance)
     {
-      // マウスの現在位置を得る
+      // 마우스의 현재 위치를 얻을
       const GLfloat x(static_cast<GLfloat>(instance->mouse_x));
       const GLfloat y(static_cast<GLfloat>(instance->mouse_y));
 
@@ -994,12 +994,12 @@ public:
       case GLFW_MOUSE_BUTTON_1:
         if (action)
         {
-          // 左ドラッグ開始
+          // 드래그 시작
           instance->trackball_left.start(x, y);
         }
         else
         {
-          // 左ドラッグ終了
+          // 드래그 종료
           instance->trackball_left.stop(x, y);
         }
         break;
@@ -1007,12 +1007,12 @@ public:
       case GLFW_MOUSE_BUTTON_2:
         if (action)
         {
-          // 右ドラッグ開始
+          // 오른쪽 드래그 시작
           instance->trackball_right.start(x, y);
         }
         else
         {
-          // 右ドラッグ終了
+          // 오른쪽 드래그 종료
           instance->trackball_right.stop(x, y);
         }
         break;
@@ -1027,11 +1027,11 @@ public:
   }
 
   //
-  // マウスホイールを操作した時の処理
+  // 마우스 휠을 조작했을 때의 처리
   //
   static void wheel(GLFWwindow *window, double x, double y)
   {
-    // このインスタンスの this ポインタを得る
+    // 이 인스턴스의 this 포인터를 얻을
     Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
     if (instance)
@@ -1052,7 +1052,7 @@ public:
   }
 
   //
-  // ウィンドウの幅を得る
+  // 창의 너비를 얻을
   //
   GLsizei getWidth() const
   {
@@ -1060,7 +1060,7 @@ public:
   }
 
   //
-  // ウィンドウの高さを得る
+  // 창의 높이를 얻을
   //
   GLsizei getHeight() const
   {
@@ -1068,7 +1068,7 @@ public:
   }
 
   //
-  // ウィンドウのサイズを得る
+  // 창의 크기를 얻을
   //
   void getSize(GLsizei *size) const
   {
@@ -1077,7 +1077,7 @@ public:
   }
 
   //
-  // ウィンドウのアスペクト比を得る
+  // 윈도우의 화면 비율을 얻을
   //
   GLfloat getAspect() const
   {
@@ -1085,7 +1085,7 @@ public:
   }
 
   //
-  // 矢印キーの現在の X 値を得る
+  // 화살표 키 현재의 X 값을 얻을
   //
   GLfloat getArrowX() const
   {
@@ -1093,7 +1093,7 @@ public:
   }
 
   //
-  // 矢印キーの現在の Y 値を得る
+  // 화살표 키 현재의 Y 값을 얻을
   //
   GLfloat getArrowY() const
   {
@@ -1101,7 +1101,7 @@ public:
   }
 
   //
-  // 矢印キーの現在の値を得る
+  // 화살표 키의 현재 값을 얻을
   //
   void getArrow(GLfloat *arrow) const
   {
@@ -1110,7 +1110,7 @@ public:
   }
 
   //
-  // シフトキーを押しながら矢印キーの現在の X 値を得る
+  // Shift 키를 누른 상태에서 화살표 키 현재의 X 값을 얻을
   //
   GLfloat getShiftArrowX() const
   {
@@ -1118,7 +1118,7 @@ public:
   }
 
   //
-  // シフトキーを押しながら矢印キーの現在の Y 値を得る
+  // Shift 키를 누른 상태에서 화살표 키 현재의 Y 값을 얻을
   //
   GLfloat getShiftArrowY() const
   {
@@ -1126,7 +1126,7 @@ public:
   }
 
   //
-  // シフトキーを押しながら矢印キーの現在の値を得る
+  // Shift 키를 누른 상태에서 화살표 키의 현재 값을 얻을
   //
   void getShiftArrow(GLfloat *shift_arrow) const
   {
@@ -1135,7 +1135,7 @@ public:
   }
 
   //
-  // コントロールキーを押しながら矢印キーの現在の X 値を得る
+  // 컨트롤 키를 누른 상태에서 화살표 키 현재의 X 값을 얻을
   //
   GLfloat getControlArrowX() const
   {
@@ -1143,7 +1143,7 @@ public:
   }
 
   //
-  // コントロールキーを押しながら矢印キーの現在の Y 値を得る
+  // 컨트롤 키를 누른 상태에서 화살표 키 현재의 Y 값을 얻을
   //
   GLfloat getControlArrowY() const
   {
@@ -1151,7 +1151,7 @@ public:
   }
 
   //
-  // コントロールキーを押しながら矢印キーの現在の値を得る
+  // 컨트롤 키를 누른 상태에서 화살표 키의 현재 값을 얻을
   //
   void getControlArrow(GLfloat *control_arrow) const
   {
@@ -1160,7 +1160,7 @@ public:
   }
 
   //
-  // マウスの X 座標を得る
+  // 마우스의 X 좌표를 얻을
   //
   GLfloat getMouseX() const
   {
@@ -1168,7 +1168,7 @@ public:
   }
 
   //
-  // マウスの Y 座標を得る
+  // 마우스의 Y 좌표를 얻을
   //
   GLfloat getMouseY() const
   {
@@ -1176,7 +1176,7 @@ public:
   }
 
   //
-  // マウスの現在位置を得る
+  // 마우스의 현재 위치를 얻을
   //
   void getMouse(GLfloat *position) const
   {
@@ -1185,7 +1185,7 @@ public:
   }
 
   //
-  // マウスホイールの現在の回転角を得る
+  // 마우스 휠의 현재 회전 각도를 얻을
   //
   GLfloat getWheel() const
   {
@@ -1193,7 +1193,7 @@ public:
   }
 
   //
-  // シフトを押しながらマウスホイールの現在の回転角を得る
+  // 시프트를 누른 상태에서 마우스 휠의 현재 회전 각도를 얻을
   //
   GLfloat getShiftWheel() const
   {
@@ -1201,7 +1201,7 @@ public:
   }
 
   //
-  // コントロールを押しながらマウスホイールの現在の回転角を得る
+  // 컨트롤을 누른 상태에서 마우스 휠의 현재 회전 각도를 얻을
   //
   GLfloat getControlWheel() const
   {
@@ -1209,7 +1209,7 @@ public:
   }
 
   //
-  // 左ボタンによるトラックボールの回転変換行列を得る
+  // 왼쪽 버튼으로 트랙볼의 회전 변환 행렬을 얻는다
   //
   const GgMatrix getLeftTrackball() const
   {
@@ -1217,7 +1217,7 @@ public:
   }
 
   //
-  // 右ボタンによるトラックボールの回転変換行列を得る
+  // 오른쪽 버튼으로 트랙볼의 회전 변환 행렬을 얻는다
   //
   const GgMatrix getRightTrackball() const
   {
